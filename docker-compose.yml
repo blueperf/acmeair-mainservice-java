@@ -1,0 +1,78 @@
+booking-db:
+  container_name: booking-db
+  image: mongo
+  net: ${NETWORK}
+
+customer-db:
+  container_name: customer-db
+  image: mongo
+  net: ${NETWORK}
+
+flight-db:
+  container_name: flight-db
+  image: mongo
+  net: ${NETWORK}
+
+nginx1:
+  container_name: nginx1
+  net: ${NETWORK}
+  restart: always
+  build: ./nginx/
+  ports:
+    - "80:80"
+  volumes:
+    - /www/public
+  volumes_from:
+    - mainservice-java
+    - authservice-java
+    - bookingservice-java
+    - customerservice-java
+    - flightservice-java
+
+mainservice-java:
+  container_name: mainservice-java
+  net: ${NETWORK}
+  build: ../mainservice-java/
+  environment:
+    - LICENSE=accept
+
+authservice-java:
+  container_name: authservice-java
+  net: ${NETWORK}
+  build: ../authservice-java/
+  environment:
+    - LICENSE=accept
+    - CUSTOMER_SERVICE=nginx1/customer
+
+bookingservice-java:
+  container_name: bookingservice-java
+  net: ${NETWORK}
+  build: ../bookingservice-java/
+  environment:
+    - LICENSE=accept
+    - MONGO_HOST=booking-db
+    - CUSTOMER_SERVICE=nginx1/customer
+    - FLIGHT_SERVICE=nginx1/flight
+    - TRACK_REWARD_MILES=true
+  volumes_from:
+    - booking-db
+
+customerservice-java:
+  container_name: customerservice-java
+  net: ${NETWORK}
+  build: ../customerservice-java/
+  environment:
+    - LICENSE=accept
+    - MONGO_HOST=customer-db
+  volumes_from:
+    - customer-db
+
+flightservice-java:
+  container_name: flightservice-java
+  net: ${NETWORK}
+  build: ../flightservice-java/
+  environment:
+    - LICENSE=accept
+    - MONGO_HOST=flight-db
+  volumes_from:
+    - flight-db

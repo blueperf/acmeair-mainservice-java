@@ -1,0 +1,72 @@
+###### Main Service ######
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mainservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: main-deployment
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9080"
+    spec:
+      containers:
+      - name: mainservice-java
+        image: mainservice-java:latest
+        ports:
+        - containerPort: 9080
+        - containerPort: 9443
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: USERNAME
+          value: admin
+        - name: PASSWORD
+          value: password
+        - name: MB_KEYSTORE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mb-keystore-password
+              key: password
+        - name: MB_TRUSTSTORE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mb-truststore-password
+              key: password
+        volumeMounts:
+          - name: keystores
+            mountPath: /etc/wlp/config/keystore
+            readOnly: true
+          - name: truststores
+            mountPath: /etc/wlp/config/truststore
+            readOnly: true
+          - name: liberty-config
+            mountPath: /config/configDropins
+      volumes:
+        - name: keystores
+          secret:
+            secretName: mb-keystore
+        - name: truststores
+          secret:
+            secretName: mb-truststore
+        - name: liberty-config
+          configMap:
+            name: liberty-logging-config
+            items:
+              - key: keystore.xml
+                path: defaults/keystore.xml
+              - key: logging.xml
+                path: defaults/logging.xml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: main-service
+  namespace: default
+spec:
+  ports:
+    - port: 9080
+  selector:
+    name: main-deployment

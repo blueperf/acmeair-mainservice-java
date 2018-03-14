@@ -1,0 +1,12 @@
+bin/
+build/
+target/
+.settings/
+.metadata
+.classpath
+.project
+.gradle
+.DS_Store
+/.apt_generated/
+.factorypath
+src/main/webapp/META-INF/MANIFEST.MF
