@@ -9,7 +9,7 @@ This implementation can support running on a variety of runtime platforms includ
 * Instructions for [setting up and building the codebase](Build_Instructions.md)
 
 ## Full Benchmark Installation Instructions on various docker enviornments.
-![alt text](https://github.ibm.com/BluemixPerf/mainservice-java/blob/master/images/AcmeairMS.png "AcmeairMS Java")
+![alt text](https://github.com/blueperf/acmeair-mainservice-java/blob/master/images/AcmeairMS.png "AcmeairMS Java")
 
 ## Prereq \*IMPORTANT\*
 All of these examples assume you have the acmeair-mainservice, acmeair-authservice, acmeair-bookingservice, acmeair-customerservice, and acmeair-flightservice directories, (and possibly others) on your docker machine in the same directory. It also assumes all applications have been built with maven.
