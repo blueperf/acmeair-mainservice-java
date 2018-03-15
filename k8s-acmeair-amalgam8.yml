@@ -1,0 +1,382 @@
+##### bookingdb  #####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    service: booking-db
+  name: booking-db
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: booking-db
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: booking-db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: booking-db
+    spec:
+      containers:
+      - image: mongo
+        name: booking-db
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+##### customerdb #####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    service: customer-db
+  name: customer-db
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: customer-db
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: customer-db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: customer-db
+    spec:
+      containers:
+      - image: mongo
+        name: customer-db
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+##### flightdb #####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    service: flight-db
+  name: flight-db
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: flight-db
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: flight-db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: flight-db
+    spec:
+      containers:
+      - image: mongo
+        name: flight-db
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+###### Gateway ######
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  labels:
+    name: gateway
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+    protocol: TCP
+    nodePort: 32000
+  selector:
+    name: gateway
+  type: NodePort
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: gateway
+  labels:
+    name: gateway
+spec:
+  replicas: 1
+  selector:
+    name: gateway
+  template:
+    metadata:
+      labels:
+        name: gateway
+    spec:
+      containers:
+      - name: gateway
+        image: amalgam8/a8-sidecar
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 6379
+        env:
+        - name: A8_PROXY
+          value: "true"
+        - name: A8_CONTROLLER_URL
+          value: http://$(CONTROLLER_SERVICE_HOST):$(CONTROLLER_SERVICE_PORT)
+        - name: A8_REGISTRY_URL
+          value: http://$(REGISTRY_SERVICE_HOST):$(REGISTRY_SERVICE_PORT)
+        - name: A8_SERVICE
+          value: gateway
+        - name: A8_CONTROLLER_POLL
+          value: 5s
+        - name: A8_REGISTRY_POLL
+          value: 5s
+        - name: A8_LOG_LEVEL
+          value: "error"
+---
+###### Main Service ######
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: mainservice-java-a8
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: mainservice-java-a8
+    spec:
+      containers:
+      - env:
+        - name: A8_REGISTER
+          value: "true"
+        - name: A8_SERVICE
+          value: main
+        - name: A8_REGISTRY_URL
+          value: http://$(REGISTRY_SERVICE_HOST):$(REGISTRY_SERVICE_PORT)
+        - name: A8_ENDPOINT_PORT
+          value: "9080"
+        - name: A8_LOG_LEVEL
+          value: "error"
+        image: mainservice-java-a8
+        imagePullPolicy: IfNotPresent
+        name: mainservice-java-a8
+        ports:
+        - containerPort: 9080
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+##### AUTH SERVICE ####
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: authservice-java-a8
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: authservice-java-a8
+    spec:
+      containers:
+      - env:
+        - name: A8_SERVICE
+          value: auth
+        - name: A8_REGISTER
+          value: "true"
+        - name: A8_PROXY
+          value: "true"
+        - name: A8_ENDPOINT_PORT
+          value: "9080"
+        - name: A8_REGISTRY_URL
+          value: http://$(REGISTRY_SERVICE_HOST):$(REGISTRY_SERVICE_PORT)
+        - name: A8_CONTROLLER_URL
+          value: http://$(CONTROLLER_SERVICE_HOST):$(CONTROLLER_SERVICE_PORT)
+        - name: A8_CONTROLLER_POLL
+          value: 15s
+        - name: A8_LOG_LEVEL
+          value: "error"
+        - name: CUSTOMER_SERVICE
+          value: localhost:6379/customer
+        image: authservice-java-a8
+        imagePullPolicy: IfNotPresent
+        name: authservice-java-a8
+        ports:
+        - containerPort: 9080
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: bookingservice-java-a8
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: bookingservice-java-a8
+    spec:
+      containers:
+      - env:
+        - name: A8_SERVICE
+          value: booking
+        - name: A8_REGISTER
+          value: "true"
+        - name: A8_ENDPOINT_PORT
+          value: "9080"
+        - name: A8_REGISTRY_URL
+          value: http://$(REGISTRY_SERVICE_HOST):$(REGISTRY_SERVICE_PORT)
+        - name: A8_LOG_LEVEL
+          value: "error"
+        - name: MONGO_HOST
+          value: $(BOOKING_DB_SERVICE_HOST)
+        image: bookingservice-java-a8
+        imagePullPolicy: IfNotPresent
+        name: bookingservice-java-a8
+        ports:
+        - containerPort: 9080
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: customerservice-java-a8
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: customer
+    spec:
+      containers:
+      - env:
+        - name: A8_SERVICE
+          value: customer
+        - name: A8_REGISTER
+          value: "true"
+        - name: A8_ENDPOINT_PORT
+          value: "9080"
+        - name: A8_REGISTRY_URL
+          value: http://$(REGISTRY_SERVICE_HOST):$(REGISTRY_SERVICE_PORT)
+        - name: A8_LOG_LEVEL
+          value: "error"
+        - name: MONGO_HOST
+          value: $(CUSTOMER_DB_SERVICE_HOST)
+        image: customerservice-java-a8
+        imagePullPolicy: IfNotPresent
+        name: customerservice-java-a8
+        ports:
+        - containerPort: 9080
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: flightservice-java-a8
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: flightservice-java-a8
+    spec:
+      containers:
+      - env:
+        - name: A8_SERVICE
+          value: flight
+        - name: A8_REGISTER
+          value: "true"
+        - name: A8_ENDPOINT_PORT
+          value: "9080"
+        - name: A8_REGISTRY_URL
+          value: http://$(REGISTRY_SERVICE_HOST):$(REGISTRY_SERVICE_PORT)
+        - name: A8_LOG_LEVEL
+          value: "error"
+        - name: MONGO_HOST
+          value: $(FLIGHT_DB_SERVICE_HOST) 
+        image: flightservice-java-a8
+        imagePullPolicy: IfNotPresent
+        name: flightservice-java-a8
+        ports:
+        - containerPort: 9080
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+
+
+
+

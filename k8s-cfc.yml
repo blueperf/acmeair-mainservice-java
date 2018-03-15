@@ -1,0 +1,393 @@
+##### Booking Database  #####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    service: booking-db
+  name: booking-db
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: booking-db
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: booking-db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: booking-db
+    spec:
+      containers:
+      - image: mongo
+        name: booking-db
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+
+##### Customer Database #####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    service: customer-db
+  name: customer-db
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: customer-db
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: customer-db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: customer-db
+    spec:
+      containers:
+      - image: mongo
+        name: customer-db
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+
+##### Flight Database #####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    service: flight-db
+  name: flight-db
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: flight-db
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: flight-db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: flight-db
+    spec:
+      containers:
+      - image: mongo
+        name: flight-db
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+
+###### Main Service ######
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mainservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: main-deployment
+    spec:
+      containers:
+        - name: mainservice-java
+          image: master.cfc:8500/admin/mainservice-java 
+          ports:
+            - containerPort: 9080
+          imagePullPolicy: Always
+      imagePullSecrets:
+      - name: admin.registrykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: main-service
+  namespace: default
+spec:
+  ports:
+    - port: 9080
+  selector:
+    name: main-deployment
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/ssl-redirect: "false"
+  name: main-ingress
+spec:
+  rules:
+  - host: 
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: main-service
+          servicePort: 9080
+---
+
+### Flight Service ####
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flightservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: flight-deployment
+    spec:
+      containers:
+      - env:
+        - name: MONGO_HOST
+          value: flight-db
+        name: flightservice-java
+        image: master.cfc:8500/admin/flightservice-java
+        ports:
+          - containerPort: 9080
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: admin.registrykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flight-service
+  namespace: default
+spec:
+  ports:
+    - port: 9080
+  selector:
+    name: flight-deployment
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/ssl-redirect: "false"
+  name: flight-ingress
+spec:
+  rules:
+  - host: 
+    http:
+      paths:
+      - path: /flight
+        backend:
+          serviceName: flight-service
+          servicePort: 9080
+---
+
+### Auth Service ###
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: authservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: auth-deployment
+    spec:
+      containers:
+      - env:
+        - name: CUSTOMER_SERVICE
+          value: $(CUSTOMER_SERVICE_SERVICE_HOST):$(CUSTOMER_SERVICE_SERVICE_PORT) 
+        name: authservice-java
+        image: master.cfc:8500/admin/authservice-java 
+        ports:
+          - containerPort: 9080
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: admin.registrykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: default
+spec:
+  ports:
+    - port: 9080
+  selector:
+    name: auth-deployment
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/ssl-redirect: "false"
+  name: auth-ingress
+spec:
+  rules:
+  - host: 
+    http:
+      paths:
+      - path: /auth
+        backend:
+          serviceName: auth-service
+          servicePort: 9080
+---
+
+### Booking Service ###
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: bookingservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: booking-deployment
+    spec:
+      containers:
+      - env:
+        - name: MONGO_HOST
+          value: booking-db
+        name: bookingservice-java
+        image: master.cfc:8500/admin/bookingservice-java 
+        ports:
+          - containerPort: 9080
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: admin.registrykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking-service
+  namespace: default
+spec:
+  ports:
+    - port: 9080
+  selector:
+    name: booking-deployment
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/ssl-redirect: "false"
+  name: booking-ingress
+spec:
+  rules:
+  - host: 
+    http:
+      paths:
+      - path: /booking
+        backend:
+          serviceName: booking-service
+          servicePort: 9080
+---
+
+### Customer Service
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: customerservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: customer-deployment
+    spec:
+      containers:
+      - env:
+        - name: MONGO_HOST
+          value: customer-db 
+        name: customerservice-java
+        image: master.cfc:8500/admin/customerservice-java 
+        ports:
+          - containerPort: 9080
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: admin.registrykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-service
+  namespace: default
+spec:
+  ports:
+    - port: 9080
+  selector:
+    name: customer-deployment
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/ssl-redirect: "false" 
+  name: customer-ingress
+spec:
+  rules:
+  - host: 
+    http:
+      paths:
+      - path: /customer
+        backend:
+          serviceName: customer-service
+          servicePort: 9080
+

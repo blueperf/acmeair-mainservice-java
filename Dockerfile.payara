@@ -1,0 +1,2 @@
+FROM payara/server-web
+ADD target/*service-java-2.0.0-SNAPSHOT.war $DEPLOY_DIR

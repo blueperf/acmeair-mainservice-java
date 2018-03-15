@@ -1,0 +1,107 @@
+# DB Containers
+booking-db:
+  container_name: booking-db
+  image: mongo
+
+customer-db:
+  container_name: customer-db
+  image: mongo
+
+flight-db:
+  container_name: flight-db
+  image: mongo
+
+gateway:
+  image: amalgam8/a8-sidecar:latest
+  environment:
+    - A8_CONTROLLER_URL=http://controller:8080
+    - A8_REGISTRY_URL=http://registry:8080
+    - A8_PROXY=true
+    - A8_LOG_LEVEL=error
+    - A8_SERVICE=gateway:none
+    - A8_CONTROLLER_POLL=15s
+  ports:
+    - "32000:6379"
+  external_links:
+    - controller
+    - registry
+  container_name: gateway
+
+
+# Service Containers
+mainservice-java-a8:
+  build:  ../mainservice-java/
+  dockerfile: Dockerfile.a8
+
+  environment:
+    - A8_REGISTRY_URL=http://registry:8080
+    - A8_SERVICE=main
+    - A8_REGISTER=true
+    - A8_ENDPOINT_PORT=9080
+    - A8_LOG_LEVEL=error
+  external_links:
+    - registry
+
+authservice-java-a8:
+  build: ../authservice-java/
+  dockerfile: Dockerfile.a8
+  environment:
+    - A8_REGISTRY_URL=http://registry:8080
+    - A8_SERVICE=auth
+    - A8_REGISTER=true
+    - A8_ENDPOINT_PORT=9080
+    - A8_LOG_LEVEL=error
+    - A8_PROXY=true
+    - A8_CONTROLLER_URL=http://controller:8080
+    - A8_CONTROLLER_POLL=15s
+    - CUSTOMER_SERVICE=localhost:6379/customer
+  external_links:
+    - registry
+    - controller
+
+bookingservice-java-a8:
+  build: ../bookingservice-java/
+  dockerfile: Dockerfile.a8
+  links:
+    - booking-db
+  environment:
+    - A8_REGISTRY_URL=http://registry:8080
+    - A8_SERVICE=booking
+    - A8_REGISTER=true
+    - A8_ENDPOINT_PORT=9080
+    - A8_LOG_LEVEL=error
+    - MONGO_HOST=booking-db
+  external_links:
+    - registry
+
+customerservice-java-a8:
+  build: ../customerservice-java/
+  dockerfile: Dockerfile.a8
+  links:
+    - customer-db
+  environment:
+    - A8_REGISTRY_URL=http://registry:8080
+    - A8_SERVICE=customer
+    - A8_REGISTER=true
+    - A8_ENDPOINT_PORT=9080
+    - A8_LOG_LEVEL=error
+    - MONGO_HOST=customer-db
+  external_links:
+    - registry
+
+
+flightservice-java-a8:
+  build:  ../flightservice-java/
+  dockerfile: Dockerfile.a8
+  links:
+    - flight-db
+  environment:
+    - A8_REGISTRY_URL=http://registry:8080
+    - A8_SERVICE=flight
+    - A8_REGISTER=true
+    - A8_ENDPOINT_PORT=9080
+    - A8_LOG_LEVEL=error
+    - MONGO_HOST=flight-db
+  external_links:
+    - registry
+

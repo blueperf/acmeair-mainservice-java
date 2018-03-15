@@ -1,0 +1,9 @@
+FROM websphere-liberty:microProfile
+RUN installUtility install  --acceptLicense defaultServer
+COPY server.xml /config/server.xml
+COPY target/mainservice-java-2.0.0-SNAPSHOT.war /config/apps/
+
+RUN wget -qO- https://github.com/amalgam8/amalgam8/releases/download/v1.0.0/a8sidecar.sh | sh
+COPY config.yaml /opt/microservices/config.yaml
+
+CMD [ "a8sidecar", "--config", "/opt/microservices/config.yaml" ]

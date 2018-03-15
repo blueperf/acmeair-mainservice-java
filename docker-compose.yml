@@ -51,9 +51,6 @@ bookingservice-java:
   environment:
     - LICENSE=accept
     - MONGO_HOST=booking-db
-    - CUSTOMER_SERVICE=nginx1/customer
-    - FLIGHT_SERVICE=nginx1/flight
-    - TRACK_REWARD_MILES=true
   volumes_from:
     - booking-db
 

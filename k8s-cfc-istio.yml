@@ -1,0 +1,340 @@
+##### Booking Database  #####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    service: booking-db
+  name: booking-db
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: booking-db
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: booking-db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: booking-db
+    spec:
+      containers:
+      - image: mongo
+        name: booking-db
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+
+##### Customer Database #####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    service: customer-db
+  name: customer-db
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: customer-db
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: customer-db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: customer-db
+    spec:
+      containers:
+      - image: mongo
+        name: customer-db
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+
+##### Flight Database #####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    service: flight-db
+  name: flight-db
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: flight-db
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: flight-db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: flight-db
+    spec:
+      containers:
+      - image: mongo
+        name: flight-db
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+
+###### Main Service ######
+apiVersion: v1
+kind: Service
+metadata:
+  name: main
+  namespace: default
+  labels:
+    app: main
+spec:
+  ports:
+    - port: 9080
+      name: http
+  selector:
+    app: main
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: main
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: main
+    spec:
+      containers:
+        - name: main
+          image: master.cfc:8500/admin/mainservice-java
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9080
+      imagePullSecrets:
+      - name: admin.registrykey
+---
+###### Flight Service ######
+apiVersion: v1
+kind: Service
+metadata:
+  name: flight
+  labels:
+    app: flight
+spec:
+  ports:
+    - port: 9080
+      name: http
+  selector:
+    app: flight
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flight
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: flight
+    spec:
+      containers:
+        - name: flight
+          image: master.cfc:8500/admin/flightservice-java
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9080
+      imagePullSecrets:
+      - name: admin.registrykey
+---
+###### Booking Service ######
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking
+  labels:
+    app: booking
+spec:
+  ports:
+    - port: 9080
+      name: http
+  selector:
+    app: booking
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: booking
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: booking
+    spec:
+      containers:
+        - name: booking
+          image: master.cfc:8500/admin/bookingservice-java
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9080
+      imagePullSecrets:
+      - name: admin.registrykey
+---
+###### Customer Service ######
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer
+  labels:
+    app: customer
+spec:
+  ports:
+    - port: 9080
+      name: http
+  selector:
+    app: customer
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: customer
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: customer
+    spec:
+      containers:
+        - name: customer
+          image: master.cfc:8500/admin/customerservice-java
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9080
+      imagePullSecrets:
+      - name: admin.registrykey
+---
+###### Auth Service ######
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth
+  labels:
+    app: auth
+spec:
+  ports:
+    - port: 9080
+      name: http
+  selector:
+    app: auth
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+      - env:
+        - name: CUSTOMER_SERVICE
+          value: customer:9080/customer
+        name: auth
+        image: master.cfc:8500/admin/authservice-java
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 9080
+      imagePullSecrets:
+      - name: admin.registrykey
+---
+###########################################################################
+# Ingress resource (gateway)
+##########################################################################
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway
+  annotations:
+    kubernetes.io/ingress.class: "istio"
+    #nginx.org/rewrites: "serviceName=flight rewrite=/;serviceName=auth rewrite=/;serviceName=booking rewrite=/;serviceName=customer rewrite=/"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /flight.*
+        backend:
+          serviceName: flight
+          servicePort: 9080
+      - path: /booking.*
+        backend:
+          serviceName: booking
+          servicePort: 9080
+      - path: /customer.*
+        backend:
+          serviceName: customer
+          servicePort: 9080
+      - path: /auth.*
+        backend:
+          serviceName: auth
+          servicePort: 9080
+      - path: /acmeair.*
+        backend:
+          serviceName: main
+          servicePort: 9080
