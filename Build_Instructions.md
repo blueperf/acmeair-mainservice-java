@@ -60,12 +60,12 @@ Linux:
 
 ##### Clone Git Repo
 
-	git clone https://github.ibm.com/BluemixPerf/mainservice-java.git
+	git clone https://github.com/blueperf/mainservice-java.git
 
 ##### Building the sample
 
   
-	cd <mainservice_GIT_PATH>  
+	cd <acmeair-mainservice-java_GIT_PATH>  
 	mvn clean package
 
 This will download prerequisite jars and build:  

@@ -1,2 +1,2 @@
 FROM tomee:8-jre-7.0.3-webprofile
-COPY target/mainservice-java-2.0.0-SNAPSHOT.war /usr/local/tomee/webapps/acmeair.war
+COPY target/acmeair-mainservice-java-2.0.0-SNAPSHOT.war /usr/local/tomee/webapps/acmeair.war

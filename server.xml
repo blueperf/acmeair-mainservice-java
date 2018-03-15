@@ -11,7 +11,7 @@
                   httpPort="9080"
                   httpsPort="9443" />
     <webApplication name="mainservice"
-        location="mainservice-java-2.0.0-SNAPSHOT.war"
+        location="acmeair-mainservice-java-2.0.0-SNAPSHOT.war"
         contextRoot="/acmeair" />
   	<webContainer deferServletLoad="false"/>
 </server>

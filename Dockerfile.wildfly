@@ -1,2 +1,2 @@
 FROM jboss/wildfly
-ADD target/mainservice-java-2.0.0-SNAPSHOT.war /opt/jboss/wildfly/standalone/deployments/
+ADD target/acmeair-mainservice-java-2.0.0-SNAPSHOT.war /opt/jboss/wildfly/standalone/deployments/
