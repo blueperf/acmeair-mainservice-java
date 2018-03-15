@@ -2,20 +2,20 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: mainservice
+  name: acmeair-mainservice
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: main-deployment
+        name: acmeair-main-deployment
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9080"
     spec:
       containers:
-      - name: mainservice-java
-        image: mainservice-java:latest
+      - name: acmeair-mainservice-java
+        image: acmeair-mainservice-java:latest
         ports:
         - containerPort: 9080
         - containerPort: 9443
@@ -29,10 +29,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: main-service
+  name: acmeair-main-service
   namespace: default
 spec:
   ports:
     - port: 9080
   selector:
-    name: main-deployment
+    name: acmeair-main-deployment

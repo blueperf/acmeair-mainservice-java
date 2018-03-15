@@ -14,25 +14,25 @@ mvn clean package
 docker build -t mainservice-java .
 kubectl apply -f ${MANIFESTS}
 
-cd ../authservice-java
+cd ../acmeair-authservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
 docker build -t authservice-java .
 kubectl apply -f ${MANIFESTS}
 
-cd ../bookingservice-java
+cd ../acmeair-bookingservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
 docker build -t bookingservice-java .
 kubectl apply -f ${MANIFESTS}
 
-cd ../customerservice-java
+cd ../acmeair-customerservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
 docker build -t customerservice-java .
 kubectl apply -f ${MANIFESTS}
 
-cd ../flightservice-java
+cd ../acmeair-flightservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
 docker build -t flightservice-java .

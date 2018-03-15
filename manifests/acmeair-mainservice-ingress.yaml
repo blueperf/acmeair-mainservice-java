@@ -4,7 +4,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /acmeair
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-  name: main-ingress
+  name: acmeair-main-ingress
 spec:
   rules:
   - host:
@@ -12,5 +12,5 @@ spec:
       paths:
       - path: /acmeair
         backend:
-          serviceName: main-service
+          serviceName: acmeair-main-service
           servicePort: 9080

@@ -6,22 +6,22 @@ kubectl delete -f manifests
 
 sleep 15
 
-cd ../authservice-java
+cd ../acmeair-authservice-java
 kubectl delete -f manifests
 
 sleep 15
 
-cd ../bookingservice-java
+cd ../acmeair-bookingservice-java
 kubectl delete -f manifests
 
 sleep 15
 
-cd ../customerservice-java
+cd ../acmeair-customerservice-java
 kubectl delete -f manifests
 
 sleep 15
 
-cd ../flightservice-java
+cd ../acmeair-flightservice-java
 kubectl delete -f manifests
 
 sleep 15

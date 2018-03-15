@@ -3,25 +3,25 @@
 cd "$(dirname "$0")"
 cd ..
 mvn clean package
-docker build -t mycluster.icp:8500/admin/mainservice-java .
-docker push mycluster.icp:8500/admin/mainservice-java
+docker build -t mycluster.icp:8500/admin/acmeair-mainservice-java .
+docker push mycluster.icp:8500/admin/acmeair-mainservice-java
 
-cd ../authservice-java
+cd ../acmeair-authservice-java
 mvn clean package
-docker build -t mycluster.icp:8500/admin/authservice-java .
-docker push mycluster.icp:8500/admin/authservice-java
+docker build -t mycluster.icp:8500/admin/acmeair-authservice-java .
+docker push mycluster.icp:8500/admin/acmeair-authservice-java
 
-cd ../bookingservice-java
+cd ../acmeair-bookingservice-java
 mvn clean package
-docker build -t mycluster.icp:8500/admin/bookingservice-java .
-docker push mycluster.icp:8500/admin/bookingservice-java
+docker build -t mycluster.icp:8500/admin/acmeair-bookingservice-java .
+docker push mycluster.icp:8500/admin/acmeair-bookingservice-java
 
-cd ../customerservice-java
+cd ../acmeair-customerservice-java
 mvn clean package
-docker build -t mycluster.icp:8500/admin/customerservice-java .
-docker push mycluster.icp:8500/admin/customerservice-java
+docker build -t mycluster.icp:8500/admin/acmeair-customerservice-java .
+docker push mycluster.icp:8500/admin/acmeair-customerservice-java
 
-cd ../flightservice-java
+cd ../acmeair-flightservice-java
 mvn clean package
-docker build -t mycluster.icp:8500/admin/flightservice-java .
-docker push mycluster.icp:8500/admin/flightservice-java
+docker build -t mycluster.icp:8500/admin/acmeair-flightservice-java .
+docker push mycluster.icp:8500/admin/acmeair-flightservice-java

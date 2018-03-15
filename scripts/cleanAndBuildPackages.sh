@@ -4,16 +4,16 @@ cd "$(dirname "$0")"
 cd ..
 mvn clean package
 
-cd ../authservice-java
+cd ../acmeair-authservice-java
 mvn clean package
 
-cd ../bookingservice-java
+cd ../acmeair-bookingservice-java
 mvn clean package
 
-cd ../customerservice-java
+cd ../acmeair-customerservice-java
 mvn clean package
 
-cd ../flightservice-java
+cd ../acmeair-flightservice-java
 mvn clean package
 
 

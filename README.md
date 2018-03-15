@@ -12,7 +12,7 @@ This implementation can support running on a variety of runtime platforms includ
 ![alt text](https://github.ibm.com/BluemixPerf/mainservice-java/blob/master/images/AcmeairMS.png "AcmeairMS Java")
 
 ## Prereq \*IMPORTANT\*
-All of these examples assume you have the mainservice, authservice, bookingservice, customerservice, and flightservice directories, (and possibly others) on your docker machine in the same directory. It also assume all applications have been built with maven.
+All of these examples assume you have the acmeair-mainservice, acmeair-authservice, acmeair-bookingservice, acmeair-customerservice, and acmeair-flightservice directories, (and possibly others) on your docker machine in the same directory. It also assumes all applications have been built with maven.
 
 * NOTE: DO NOT use acmeair.properties file to configure database unless there is specific needs.  Use Service Bridge for Mongo DB to get good performance results (When using acmeair.properties file, make sure to configure every DB options properly - if only setting up the hostname, port number & credentials, it will give poor performance)
 
@@ -22,10 +22,10 @@ All of these examples assume you have the mainservice, authservice, bookingservi
 
 Prereq: [Install Docker, docker-compose, and start Docker daemon on your local machine](https://docs.docker.com/installation/)
 
-1. cd mainservice-java
+1. cd acmeair-mainservice-java
 2. Create docker network
  * docker network create --driver bridge my-net
-3. Build/Start Containers. This will build all the node micro-services, mongo db instances, and an nginx proxy.
+3. Build/Start Containers. This will build all the micro-services, mongo db instances, and an nginx proxy.
     * docker-compose build
     * NETWORK=my-net docker-compose up
 
@@ -40,7 +40,7 @@ Prereq: [Install Docker, docker-compose, and start Docker daemon on your local m
 1. minikube docker-env
 2. eval $(minikube docker-env)
 3. minikube addons enable ingress
-4. cd mainservice-java/scripts
+4. cd acmeair-mainservice-java/scripts
 5. Build and Deploy Services
 	./buildAndDeployToMinikube.sh
 6. Wait a couple minutes and go to http://kubernetes_ip/acmeair
@@ -60,11 +60,11 @@ This doc assumes that
 
 1. Build and push the apps
 
-	`cd mainservice-java/scripts`
+	`cd acmeair-mainservice-java/scripts`
 
 	`./buildAndPushtoICP.sh`
 2. For each service, in manifests-no-msb/deploy.*, update the image name and add any imagePullSecrets required
-Example: `mainservice-java:latest -> mycluster.icp:8500/admin/mainservice-java:latest`
+Example: `acmeair-mainservice-java:latest -> mycluster.icp:8500/admin/acmeair-mainservice-java:latest`
 
 	`imagePullSecrets:`
 
@@ -76,8 +76,3 @@ Example: `mainservice-java:latest -> mycluster.icp:8500/admin/mainservice-java:l
 
 4. Wait a couple minutes and go to http://proxy_ip/acmeair
 5. Go to the Configuration Page and Load the Database
-
-## IBM Cloud Public Instructions (TODO)
-
-
-

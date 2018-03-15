@@ -3,7 +3,7 @@
 replicaCount: 1
 revisionHistoryLimit: 1
 image:
-  repository: mainservice-java
+  repository: acmeair-mainservice-java
   tag: latest
   pullPolicy: IfNotPresent
   resources:
@@ -11,7 +11,7 @@ image:
       cpu: 200m
       memory: 300Mi
 service:
-  name: main-service
+  name: acmeair-main-service
   type: ClusterIP
   servicePort: 9080
   servicePortHttps: 9443

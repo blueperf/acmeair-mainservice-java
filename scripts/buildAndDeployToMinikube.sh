@@ -10,22 +10,32 @@ fi
 cd "$(dirname "$0")"
 cd ..
 kubectl delete -f ${MANIFESTS}
+mvn clean package
+docker build -t acmeair-mainservice-java .
 kubectl apply -f ${MANIFESTS}
 
-cd ../authservice-java
+cd ../acmeair-authservice-java
 kubectl delete -f ${MANIFESTS}
+mvn clean package
+docker build -t acmeair-authservice-java .
 kubectl apply -f ${MANIFESTS}
 
-cd ../bookingservice-java
+cd ../acmeair-bookingservice-java
 kubectl delete -f ${MANIFESTS}
+mvn clean package
+docker build -t acmeair-bookingservice-java .
 kubectl apply -f ${MANIFESTS}
 
-cd ../customerservice-java
+cd ../acmeair-customerservice-java
 kubectl delete -f ${MANIFESTS}
+mvn clean package
+docker build -t acmeair-customerservice-java .
 kubectl apply -f ${MANIFESTS}
 
-cd ../flightservice-java
+cd ../acmeair-flightservice-java
 kubectl delete -f ${MANIFESTS}
+mvn clean package
+docker build -t acmeair-flightservice-java .
 kubectl apply -f ${MANIFESTS}
 
 
