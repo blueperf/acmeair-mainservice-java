@@ -13,6 +13,9 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: {{ .Values.ingress.rewriteTarget }}
     nginx.ingress.kubernetes.io/ssl-redirect: "{{ .Values.ingress.sslRedirect }}"
     nginx.ingress.kubernetes.io/connection-proxy-header: "keep-alive"
+    ingress.kubernetes.io/rewrite-target: {{ .Values.ingress.rewriteTarget }}
+    ingress.kubernetes.io/ssl-redirect: "{{ .Values.ingress.sslRedirect }}"
+    ingress.kubernetes.io/connection-proxy-header: "keep-alive"
 
 spec:
   rules:
