@@ -3,7 +3,7 @@
 
 An implementation of the Acme Air Main Service for Java/Liberty. The main service primarily consists of the presentation layer (web pages) that interact with the other services.
 
-This implementation can support running on a variety of runtime platforms including standalone bare metal system, Virtual Machines, docker containers, IBM Bluemix, IBM Bluemix Container Service, IBM Spectrum CFC, and other Kubernetes environments.
+This implementation can support running on a variety of runtime platforms including standalone bare metal system, Virtual Machines, docker containers, IBM Cloud, IBM Cloud Private, and other Kubernetes environments.
 
 ## Build Instructions
 * Instructions for [setting up and building the codebase](Build_Instructions.md)
@@ -12,9 +12,8 @@ This implementation can support running on a variety of runtime platforms includ
 ![alt text](https://github.com/blueperf/acmeair-mainservice-java/blob/master/images/AcmeairMS.png "AcmeairMS Java")
 
 ## Prereq \*IMPORTANT\*
-All of these examples assume you have the acmeair-mainservice, acmeair-authservice, acmeair-bookingservice, acmeair-customerservice, and acmeair-flightservice directories, (and possibly others) on your docker machine in the same directory. It also assumes all applications have been built with maven.
+All of these examples assume you have the acmeair-mainservice-java, acmeair-authservice-java, acmeair-bookingservice-java, acmeair-customerservice-java, and acmeair-flightservice-java directories, (and possibly others) on your docker machine in the same directory. It also assumes all applications have been built with maven.
 
-* NOTE: DO NOT use acmeair.properties file to configure database unless there is specific needs.  Use Service Bridge for Mongo DB to get good performance results (When using acmeair.properties file, make sure to configure every DB options properly - if only setting up the hostname, port number & credentials, it will give poor performance)
 
 * Instructions for different [run modes](Modes.md)
 
