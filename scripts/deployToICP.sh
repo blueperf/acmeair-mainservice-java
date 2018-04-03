@@ -47,6 +47,7 @@ sed -i "s@mycluster.icp:8500/default/acmeair-authservice-java:latest@acmeair-aut
 
 
 cd ../acmeair-bookingservice-java
+kubectl delete -f ${MANIFESTS}
 if [[ `grep -c mycluster.icp ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml` == 0 ]]
 then
   echo "Adding mycluster.icp:8500/default/"
@@ -58,6 +59,7 @@ sed -i "s@mycluster.icp:8500/default/acmeair-bookingservice-java:latest@acmeair-
 
 
 cd ../acmeair-customerservice-java
+kubectl delete -f ${MANIFESTS}
 if [[ `grep -c mycluster.icp ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml` == 0 ]]
 then
   echo "Adding mycluster.icp:8500/default/"
@@ -69,6 +71,7 @@ sed -i "s@mycluster.icp:8500/default/acmeair-customerservice-java:latest@acmeair
 
 
 cd ../acmeair-flightservice-java
+kubectl delete -f ${MANIFESTS}
 if [[ `grep -c mycluster.icp ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml` == 0 ]]
 then
   echo "Adding mycluster.icp:8500/default/"
@@ -77,4 +80,3 @@ fi
 kubectl apply -f ${MANIFESTS}
 echo "Removing mycluster.icp:8500/default/"
 sed -i "s@mycluster.icp:8500/default/acmeair-flightservice-java:latest@acmeair-flightservice-java:latest@" ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml
-
