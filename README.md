@@ -62,16 +62,10 @@ This doc assumes that
 	`cd acmeair-mainservice-java/scripts`
 
 	`./buildAndPushtoICP.sh`
-2. For each service, in manifests-no-msb/deploy.*, update the image name and add any imagePullSecrets required
-Example: `acmeair-mainservice-java:latest -> mycluster.icp:8500/admin/acmeair-mainservice-java:latest`
-
-	`imagePullSecrets:`
-
-	`  - name: admin.registrykey`
-
-3. Deploy to ICP. 
+	
+2. Deploy to ICP. 
 
 	`./deployToICP.sh`
 
-4. Wait a couple minutes and go to http://proxy_ip/acmeair
-5. Go to the Configuration Page and Load the Database
+3. Wait a couple minutes and go to http://proxy_ip/acmeair
+4. Go to the Configuration Page and Load the Database
