@@ -24,32 +24,59 @@ fi
 cd "$(dirname "$0")"
 cd ..
 kubectl delete -f ${MANIFESTS}
-mvn clean package
-docker build -t mainservice-java .
+if [[ `grep -c mycluster.icp ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml` == 0 ]]
+then
+  echo "Adding mycluster.icp:8500/default/"
+  sed -i "s@acmeair-mainservice-java:latest@mycluster.icp:8500/default/acmeair-mainservice-java:latest@" ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml
+fi
 kubectl apply -f ${MANIFESTS}
+echo "Removing mycluster.icp:8500/default/"
+sed -i "s@mycluster.icp:8500/default/acmeair-mainservice-java:latest@acmeair-mainservice-java:latest@" ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml
+
 
 cd ../acmeair-authservice-java
 kubectl delete -f ${MANIFESTS}
-mvn clean package
-docker build -t authservice-java .
+if [[ `grep -c mycluster.icp ${MANIFESTS}/deploy-acmeair-authservice-java.yaml` == 0 ]]
+then
+  echo "Adding mycluster.icp:8500/default/"
+  sed -i "s@acmeair-authservice-java:latest@mycluster.icp:8500/default/acmeair-authservice-java:latest@" ${MANIFESTS}/deploy-acmeair-authservice-java.yaml
+fi
 kubectl apply -f ${MANIFESTS}
+echo "Removing mycluster.icp:8500/default/"
+sed -i "s@mycluster.icp:8500/default/acmeair-authservice-java:latest@acmeair-authservice-java:latest@" ${MANIFESTS}/deploy-acmeair-authservice-java.yaml
+
 
 cd ../acmeair-bookingservice-java
 kubectl delete -f ${MANIFESTS}
-mvn clean package
-docker build -t bookingservice-java .
+if [[ `grep -c mycluster.icp ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml` == 0 ]]
+then
+  echo "Adding mycluster.icp:8500/default/"
+  sed -i "s@acmeair-bookingservice-java:latest@mycluster.icp:8500/default/acmeair-bookingservice-java:latest@" ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml
+fi
 kubectl apply -f ${MANIFESTS}
+echo "Removing mycluster.icp:8500/default/"
+sed -i "s@mycluster.icp:8500/default/acmeair-bookingservice-java:latest@acmeair-bookingservice-java:latest@" ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml
+
 
 cd ../acmeair-customerservice-java
 kubectl delete -f ${MANIFESTS}
-mvn clean package
-docker build -t customerservice-java .
+if [[ `grep -c mycluster.icp ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml` == 0 ]]
+then
+  echo "Adding mycluster.icp:8500/default/"
+  sed -i "s@acmeair-customerservice-java:latest@mycluster.icp:8500/default/acmeair-customerservice-java:latest@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
+fi
 kubectl apply -f ${MANIFESTS}
+echo "Removing mycluster.icp:8500/default/"
+sed -i "s@mycluster.icp:8500/default/acmeair-customerservice-java:latest@acmeair-customerservice-java:latest@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
+
 
 cd ../acmeair-flightservice-java
 kubectl delete -f ${MANIFESTS}
-mvn clean package
-docker build -t flightservice-java .
+if [[ `grep -c mycluster.icp ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml` == 0 ]]
+then
+  echo "Adding mycluster.icp:8500/default/"
+  sed -i "s@acmeair-flightservice-java:latest@mycluster.icp:8500/default/acmeair-flightservice-java:latest@" ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml
+fi
 kubectl apply -f ${MANIFESTS}
-
-
+echo "Removing mycluster.icp:8500/default/"
+sed -i "s@mycluster.icp:8500/default/acmeair-flightservice-java:latest@acmeair-flightservice-java:latest@" ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml
