@@ -10,5 +10,5 @@
 * Default: true
 
 ## SECURE\_SERVICE\_CALLS
-* Service to service calls will uses HMAC encrytpion to verify the authenticity of the call.
+* Service to service calls will uses HMAC encryption to verify the authenticity of the call.
 * Default: false
