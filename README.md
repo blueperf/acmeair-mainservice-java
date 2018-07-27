@@ -51,7 +51,7 @@ This doc assumes that
 * The docker env is logged into the CFC docker repo
 	* docker login mycluster.icp:8500
 
-* kubectl is attached the ICP cluster
+* kubectl and helm are attached the ICP cluster
 
 * You are running ICP as admin
 
@@ -65,7 +65,23 @@ This doc assumes that
 	
 2. Deploy to ICP. 
 
+  1. Using ibm-websphere-liberty helm chart
+  
+	`./deployChartToICP.sh`
+  
+  2. Using loose deployment manifests
+  
 	`./deployToICP.sh`
 
 3. Wait a couple minutes and go to http://proxy_ip/acmeair
 4. Go to the Configuration Page and Load the Database
+
+5. Cleanup
+
+  1. Helm chart
+  
+	`./deleteChartRelease.sh`
+  
+  2. Loose deployment manifests
+  
+	`./deleteKubeObjects.sh`
