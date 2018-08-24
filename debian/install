@@ -1,0 +1,3 @@
+target/liberty/wlp/usr/servers/defaultServer/acmeairmainservicejava.zip	usr/src/acmeairmainservicejava
+terraform/scripts/install.sh	usr/src/acmeairmainservicejava
+terraform/scripts/start.sh		usr/src/acmeairmainservicejava
