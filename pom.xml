@@ -48,7 +48,8 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<testServerHttpPort>9080</testServerHttpPort>
 		<testServerHttpsPort>9443</testServerHttpsPort>
-		<warContext>${app.name}</warContext>
+		<!-- <warContext>${app.name}</warContext> -->
+    <warContext></warContext>
 		<package.file>${project.build.directory}/${project.artifactId}-${project.version}.zip</package.file>
 		<packaging.type>usr</packaging.type>
 		<!-- Cloud Foundry/IBM Cloud properties -->

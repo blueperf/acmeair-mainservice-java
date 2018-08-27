@@ -1,0 +1,14 @@
+service:
+  enabled: true
+  name: acmeair-main-service
+  port: 9080
+  targetPort: 9080
+  type: ClusterIP
+
+ssl:
+  enabled: false
+
+ingress:
+  enabled: true
+  rewriteTarget: "/acmeair"
+  path: "/acmeair"
