@@ -49,7 +49,7 @@ metadata:
     ingress.kubernetes.io/rewrite-target: {{ $root.Values.ingress.rewriteTarget }}
     nginx.ingress.kubernetes.io/rewrite-target: {{ $root.Values.ingress.rewriteTarget }}
     ingress.bluemix.net/sticky-cookie-services: "serviceName={{ $fullname }} name=route expires=1h path={{ $root.Values.ingress.path }} hash=sha1"
-    ingress.bluemix.net/rewrite-path: "serviceName={{ $root.Values.service.name | trunc 63 | lower | trimSuffix "-" | quote }} rewrite={{ $root.Values.ingress.rewriteTarget }}"
+    ingress.bluemix.net/rewrite-path: "serviceName={{ $root.Values.service.name | trunc 63 | lower | trimSuffix "-" }} rewrite={{ $root.Values.ingress.rewriteTarget }}"
 spec:
   {{- if $root.Values.ssl.enabled }}
   tls:
