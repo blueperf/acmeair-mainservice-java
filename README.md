@@ -60,7 +60,7 @@ This doc assumes that
 1. Build and push the apps
    * `cd acmeair-mainservice-java/scripts`
    * `./buildAndPushtoICP.sh`
-2. Deploy to ICP using one of the following options. 
+2. Deploy to ICP using one of the following options: 
    * Using ibm-websphere-liberty helm chart
       * `./deployChartToICP.sh`
    * Using loose deployment manifests
@@ -74,3 +74,5 @@ This doc assumes that
       * `./deleteChartRelease.sh`
    * Loose deployment manifests
       * `./deleteKubeObjects.sh`
+   * Using [Microclimate](https://microclimate-dev2ops.github.io/)
+     * Delete the deployment pipeline
