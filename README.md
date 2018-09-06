@@ -72,6 +72,9 @@ This doc assumes that
   2. Using loose deployment manifests
   
 	`./deployToICP.sh`
+  
+  3. Using [Microclimate](https://microclimate-dev2ops.github.io/)
+    1. The AcmeAir java projects are structured to be imported and deployed using Microclimate.
 
 3. Wait a couple minutes and go to http://proxy_ip/acmeair
 4. Go to the Configuration Page and Load the Database
