@@ -58,10 +58,8 @@ This doc assumes that
 * maven is installed and set up to build with a full SDK.
 
 1. Build and push the apps
-
-  `cd acmeair-mainservice-java/scripts`
-
-  `./buildAndPushtoICP.sh`
+  * `cd acmeair-mainservice-java/scripts`
+  * `./buildAndPushtoICP.sh`
   
 2. Deploy to ICP using one of the following options. 
   * Using ibm-websphere-liberty helm chart
