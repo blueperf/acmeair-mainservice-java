@@ -65,9 +65,13 @@ This doc assumes that
   
 2. Deploy to ICP using one of the following options. 
   * Using ibm-websphere-liberty helm chart
+  
   `./deployChartToICP.sh`
+  
   * Using loose deployment manifests
+  
   `./deployToICP.sh`
+  
   * Using [Microclimate](https://microclimate-dev2ops.github.io/)
     * The AcmeAir java projects are structured to be imported and deployed using Microclimate.
 
