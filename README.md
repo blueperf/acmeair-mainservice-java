@@ -58,26 +58,19 @@ This doc assumes that
 * maven is installed and set up to build with a full SDK.
 
 1. Build and push the apps
-  * `cd acmeair-mainservice-java/scripts`
-  * `./buildAndPushtoICP.sh`
-  
+   * `cd acmeair-mainservice-java/scripts`
+   * `./buildAndPushtoICP.sh`
 2. Deploy to ICP using one of the following options. 
-  * Using ibm-websphere-liberty helm chart
-    * `./deployChartToICP.sh`
-  * Using loose deployment manifests
-    * `./deployToICP.sh`
-  * Using [Microclimate](https://microclimate-dev2ops.github.io/)
-    * The AcmeAir java projects are structured to be imported and deployed using Microclimate.
-
+   * Using ibm-websphere-liberty helm chart
+      * `./deployChartToICP.sh`
+   * Using loose deployment manifests
+     * `./deployToICP.sh`
+   * Using [Microclimate](https://microclimate-dev2ops.github.io/)
+     * The AcmeAir java projects are structured to be imported and deployed using Microclimate.
 3. Wait a couple minutes and go to http://proxy_ip/acmeair
 4. Go to the Configuration Page and Load the Database
-
 5. Cleanup
-
-  1. Helm chart
-  
-  `./deleteChartRelease.sh`
-  
-  2. Loose deployment manifests
-  
-  `./deleteKubeObjects.sh`
+   * Helm chart
+      * `./deleteChartRelease.sh`
+   * Loose deployment manifests
+      * `./deleteKubeObjects.sh`
