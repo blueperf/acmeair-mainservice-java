@@ -41,7 +41,7 @@ Prereq: [Install Docker, docker-compose, and start Docker daemon on your local m
 3. minikube addons enable ingress
 4. cd acmeair-mainservice-java/scripts
 5. Build and Deploy Services
-	./buildAndDeployToMinikube.sh
+  ./buildAndDeployToMinikube.sh
 6. Wait a couple minutes and go to http://kubernetes_ip/acmeair
 7. Go to the Configuration Page and Load the Database
 
@@ -49,23 +49,30 @@ Prereq: [Install Docker, docker-compose, and start Docker daemon on your local m
 This doc assumes that
 * ICP is installed and configured
 * The docker env is logged into the CFC docker repo
-	* docker login mycluster.icp:8500
+  * docker login mycluster.icp:8500
 
-* kubectl is attached the ICP cluster
+* kubectl and helm are attached the ICP cluster
 
 * You are running ICP as admin
 
 * maven is installed and set up to build with a full SDK.
 
 1. Build and push the apps
-
-	`cd acmeair-mainservice-java/scripts`
-
-	`./buildAndPushtoICP.sh`
-	
-2. Deploy to ICP. 
-
-	`./deployToICP.sh`
-
+   * `cd acmeair-mainservice-java/scripts`
+   * `./buildAndPushtoICP.sh`
+2. Deploy to ICP using one of the following options: 
+   * Using ibm-websphere-liberty helm chart
+      * `./deployChartToICP.sh`
+   * Using loose deployment manifests
+     * `./deployToICP.sh`
+   * Using [Microclimate](https://microclimate-dev2ops.github.io/)
+     * The AcmeAir java projects are structured to be imported and deployed using Microclimate.
 3. Wait a couple minutes and go to http://proxy_ip/acmeair
 4. Go to the Configuration Page and Load the Database
+5. Cleanup
+   * Helm chart
+      * `./deleteChartRelease.sh`
+   * Loose deployment manifests
+      * `./deleteKubeObjects.sh`
+   * Using [Microclimate](https://microclimate-dev2ops.github.io/)
+     * Delete the deployment pipeline

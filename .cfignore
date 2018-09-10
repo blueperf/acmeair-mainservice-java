@@ -1,0 +1,6 @@
+/.classpath
+/.project
+/.settings
+/src/main/liberty/config/server.env
+target/
+build/

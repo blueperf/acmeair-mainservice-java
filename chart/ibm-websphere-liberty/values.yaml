@@ -1,0 +1,154 @@
+###############################################################################
+# Licensed Materials - Property of IBM.
+# Copyright IBM Corporation 2017. All Rights Reserved.
+# U.S. Government Users Restricted Rights - Use, duplication or disclosure
+# restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# Contributors:
+#  IBM Corporation - initial API and implementation
+###############################################################################
+
+
+###############################################################################
+## Common image variables
+###############################################################################
+image:
+  repository: websphere-liberty
+  tag: latest
+  pullPolicy: IfNotPresent
+  license: ""
+
+service:
+  enabled: true
+  name: http-liberty
+  port: 9443
+  targetPort: 9443
+  type: NodePort
+
+jmsService:
+  enabled: false
+  name: jms-liberty
+  port: 7286
+  targetPort: 7286
+  type: NodePort
+
+iiopService:
+  enabled: false
+  name: iiop-liberty
+  nonSecurePort: 2809
+  nonSecureTargetPort: 2809
+  securePort: 9402
+  secureTargetPort: 9402
+  type: NodePort
+
+ssl:
+  enabled: true
+  useClusterSSLConfiguration: false
+  createClusterSSLConfiguration: false
+
+ingress:
+  enabled: false
+  rewriteTarget: "/"
+  path: "/"
+  host: ""
+  secretName: ""
+
+###############################################################################
+## Persistence Storage
+###############################################################################
+
+## Persistence is disabled by default, set Enabled: true to use
+persistence:
+  name: "liberty-pvc"
+  ## Tranlog requires a Persistence Storage volume size minimum of 1Gi
+  size: "1Gi"
+
+  useDynamicProvisioning: true
+
+  ## Specify the name of the StorageClass
+  ## Setting StorageClass: "" will use whatever storageClass is currently
+  ## setup as the Default
+  storageClassName: "" 
+
+  # if your not using dynamic provisioning, you can use selectors to 
+  # refine the binding process. You cannot specify a selector if your using dynamic provisioning!
+  selector:
+    label: ""
+    value: ""
+
+###############################################################################
+## Logs
+###############################################################################
+logs:
+  persistLogs: false
+  persistTransactionLogs: false
+  consoleFormat: json
+  consoleLogLevel: info
+  consoleSource: message,trace,accessLog,ffdc
+
+###############################################################################
+## MicroProfile
+###############################################################################
+microprofile:
+  health: 
+    enabled: false
+
+###############################################################################
+## Auto scaling
+###############################################################################
+replicaCount: 1
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+  
+###############################################################################
+## Resource constraints
+###############################################################################
+resources:
+  constraints: 
+    enabled: false
+  requests:
+    cpu: 500m
+    memory: 512Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+###############################################################################
+## Architecture
+###############################################################################
+# Specify architecture (amd64, ppc64le, s390x) and weight to be
+# used for scheduling as follows : 
+#   0 - Do not use
+#   1 - Least preferred
+#   2 - No preference
+#   3 - Most preferred
+arch:
+  amd64: "2 - No preference"
+  ppc64le: "2 - No preference"
+  s390x: "2 - No preference"
+
+###############################################################################
+## Environmental variables
+###############################################################################
+env:
+  jvmArgs: ""
+
+###############################################################################
+## Session cache
+###############################################################################
+sessioncache:
+  hazelcast:
+    enabled: false
+    image:
+      repository: hazelcast/hazelcast-kubernetes
+      tag: "3.10"
+      pullPolicy: IfNotPresent
+
+###############################################################################
+## Role-Based Access Control
+###############################################################################
+rbac:
+  install: true
