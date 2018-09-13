@@ -76,3 +76,25 @@ This doc assumes that
       * `./deleteKubeObjects.sh`
    * Using [Microclimate](https://microclimate-dev2ops.github.io/)
      * Delete the deployment pipeline
+
+## Microclimate Instructions
+
+* Prereq 1: [Install Microclimate](https://microclimate-dev2ops.github.io/installlocally)
+* Prereq 2: [Install IBM Cloud Private.](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_2.1.0.3/installing/installing.html)
+	* **Note:** Choose and install the version of IBM Cloud Private that Microclimate supports. 
+* Prereq 3: [Install Microclimate on IBM Cloud Private.](https://github.com/IBM/charts/blob/master/stable/ibm-microclimate/README.md)
+
+* Import the following microservices into Microclimate with [Importing projects](https://microclimate-dev2ops.github.io/importingaproject):
+	* [acmeair-mainservice-java](https://github.com/blueperf/acmeair-mainservice-java)
+	* [acmeair-bookingservice-java](https://github.com/blueperf/acmeair-bookingservice-java)
+	* [acmeair-authservice-java](https://github.com/blueperf/acmeair-authservice-java)
+	* [acmeair-customerservice-java](https://github.com/blueperf/acmeair-customerservice-java)
+	* [acmeair-flightservice-java](https://github.com/blueperf/acmeair-flightservice-java)
+	
+* After you import all the microservices into Microclimate, you can deploy projects into IBM Cloud Private: 
+	1. Connect the remote Microclimate instance from your Microclimate dashboard with [Connecting the local and IBM Cloud Private installations](https://microclimate-dev2ops.github.io/connectlocalandcloud).
+	2. Create a pipeline for each microservice with [Creating a build pipeline](https://microclimate-dev2ops.github.io/usingapipeline#creating-a-build-pipeline).
+	3. After a pipeline is created successfully, you can add deployments.
+	4. Deploy all the microservices with [Deploying applications](https://microclimate-dev2ops.github.io/usingapipeline#deploying-applications).
+	5. After successful deployments, you can reach the application from the `http://proxy_ip/acmeair` URL.
+	6. Go to the **Configuration** page and click the **Load the Database** link.
