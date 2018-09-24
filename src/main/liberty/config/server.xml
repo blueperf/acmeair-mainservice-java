@@ -2,8 +2,8 @@
 <server description="new server">
 	<!-- Enable features -->
 	<featureManager>
-		<feature>microProfile-1.3</feature>
-		<feature>usr:opentracingZipkin-0.30</feature>
+		<feature>microProfile-1.4</feature>
+		<feature>usr:opentracingZipkin-0.31</feature>
 		<feature>jndi-1.0</feature>
 		<feature>jsp-2.3</feature>
 		<feature>servlet-3.1</feature>
