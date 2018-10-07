@@ -89,7 +89,9 @@ This doc assumes that
 	* [acmeair-authservice-java](https://github.com/blueperf/acmeair-authservice-java)
 	* [acmeair-customerservice-java](https://github.com/blueperf/acmeair-customerservice-java)
 	* [acmeair-flightservice-java](https://github.com/blueperf/acmeair-flightservice-java)
-	
+* **Note:** After importing every project, checkout the branch to **microclimate-mp-1.3** from theia editor terminal using the command below
+	* git checkout microclimate-mp-1.3
+		
 * After you import all the microservices into Microclimate, you can deploy projects into IBM Cloud Private: 
 	1. Connect the remote Microclimate instance from your Microclimate dashboard with [Connecting the local and IBM Cloud Private installations](https://microclimate-dev2ops.github.io/connectlocalandcloud).
 	2. Create a pipeline for each microservice with [Creating a build pipeline](https://microclimate-dev2ops.github.io/usingapipeline#creating-a-build-pipeline).
