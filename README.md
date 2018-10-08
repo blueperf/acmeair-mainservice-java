@@ -79,23 +79,24 @@ This doc assumes that
 
 ## Microclimate Instructions
 
-* Prereq 1: [Install Microclimate](https://microclimate-dev2ops.github.io/installlocally)
-* Prereq 2: [Install IBM Cloud Private.](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.0/installing/installing.html)
-* Prereq 3: [Install Microclimate on IBM Cloud Private.](https://github.com/IBM/charts/blob/master/stable/ibm-microclimate/README.md)
+Prerequisites
+* [Install Microclimate.](https://microclimate-dev2ops.github.io/installlocally)
+* [Install IBM Cloud Private.](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.0/installing/installing.html)
+* [Install Microclimate on IBM Cloud Private.](https://github.com/IBM/charts/blob/master/stable/ibm-microclimate/README.md)
 
-* Import the following microservices into Microclimate with [Importing projects](https://microclimate-dev2ops.github.io/importingaproject):
+1. Import the following microservices into Microclimate with [Importing projects](https://microclimate-dev2ops.github.io/importingaproject):
 	* [acmeair-mainservice-java](https://github.com/blueperf/acmeair-mainservice-java)
 	* [acmeair-bookingservice-java](https://github.com/blueperf/acmeair-bookingservice-java)
 	* [acmeair-authservice-java](https://github.com/blueperf/acmeair-authservice-java)
 	* [acmeair-customerservice-java](https://github.com/blueperf/acmeair-customerservice-java)
 	* [acmeair-flightservice-java](https://github.com/blueperf/acmeair-flightservice-java)
 
-* After you import each project, use the `git checkout microclimate-mp-1.3` command from the Theia editor terminal to check out the microclimate-mp-1.3 branch from master.
+2. After you import each project, use the `git checkout microclimate-mp-1.3` command from the Theia editor terminal to check out the `microclimate-mp-1.3` branch from master.
 		
-* After you import all the microservices into Microclimate, you can deploy projects into IBM Cloud Private: 
-	1. Connect the remote Microclimate instance from your Microclimate dashboard with [Connecting the local and IBM Cloud Private installations](https://microclimate-dev2ops.github.io/connectlocalandcloud).
-	2. Create a pipeline for each microservice with [Creating a build pipeline](https://microclimate-dev2ops.github.io/usingapipeline#creating-a-build-pipeline).
-	3. After a pipeline is created successfully, you can add deployments.
-	4. Deploy all the microservices with [Deploying applications](https://microclimate-dev2ops.github.io/usingapipeline#deploying-applications).
-	5. After successful deployments, you can reach the application from the `http://proxy_ip/acmeair` URL.
-	6. Go to the **Configuration** page and click the **Load the Database** link.
+3. After you import all the microservices into Microclimate, you can deploy projects into IBM Cloud Private: 
+	* A.) Connect the remote Microclimate instance from your Microclimate dashboard with [Connecting the local and IBM Cloud Private installations](https://microclimate-dev2ops.github.io/connectlocalandcloud).
+	* B.) Create a pipeline for each microservice with [Creating a build pipeline](https://microclimate-dev2ops.github.io/usingapipeline#creating-a-build-pipeline).
+	* C.) After a pipeline is created successfully, you can add deployments.
+	* D.) Deploy all the microservices with [Deploying applications](https://microclimate-dev2ops.github.io/usingapipeline#deploying-applications).
+	* E.) After successful deployments, you can reach the application from the `http://proxy_ip/acmeair` URL.
+	* F.) Go to the **Configuration** page and click the **Load the Database** link.
