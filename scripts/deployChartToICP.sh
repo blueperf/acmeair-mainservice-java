@@ -14,6 +14,9 @@
 
 #!/bin/bash
 
+set -euxo pipefail
+
+CLUSTER=${1:-mycluster.icp}
 
 cd "$(dirname "$0")"
 pwd
@@ -21,7 +24,10 @@ pwd
 helm install \
   --tls \
   --name="acmeair-mainservice-java" \
-  --set image.repository="mycluster.icp:8500/default/acmeair-mainservice-java" \
+  --set-string arch.amd64="3" \
+  --set-string arch.ppc64le="0" \
+  --set-string arch.s390x="0"\
+  --set image.repository="${CLUSTER}:8500/default/acmeair-mainservice-java" \
   --set image.pullPolicy="Always" \
   --set service.type="ClusterIP" \
   --set service.port="9080" \
@@ -37,7 +43,10 @@ helm install \
 helm install \
   --tls \
   --name="acmeair-authservice-java" \
-  --set image.repository="mycluster.icp:8500/default/acmeair-authservice-java" \
+  --set-string arch.amd64="3" \
+  --set-string arch.ppc64le="0" \
+  --set-string arch.s390x="0"\
+  --set image.repository="${CLUSTER}:8500/default/acmeair-authservice-java" \
   --set image.pullPolicy="Always" \
   --set service.type="ClusterIP" \
   --set service.port="9080" \
@@ -55,7 +64,10 @@ helm install \
 helm install \
   --tls \
   --name="acmeair-bookingservice-java" \
-  --set image.repository="mycluster.icp:8500/default/acmeair-bookingservice-java" \
+  --set-string arch.amd64="3" \
+  --set-string arch.ppc64le="0" \
+  --set-string arch.s390x="0"\
+  --set image.repository="${CLUSTER}:8500/default/acmeair-bookingservice-java" \
   --set image.pullPolicy="Always" \
   --set service.type="ClusterIP" \
   --set ssl.enabled="false" \
@@ -72,7 +84,10 @@ helm install \
 helm install \
   --tls \
   --name="acmeair-customerservice-java" \
-  --set image.repository="mycluster.icp:8500/default/acmeair-customerservice-java" \
+  --set-string arch.amd64="3" \
+  --set-string arch.ppc64le="0" \
+  --set-string arch.s390x="0"\
+  --set image.repository="${CLUSTER}:8500/default/acmeair-customerservice-java" \
   --set image.pullPolicy="Always" \
   --set service.type="ClusterIP" \
   --set ssl.enabled="false" \
@@ -89,7 +104,10 @@ helm install \
 helm install \
   --tls \
   --name="acmeair-flightservice-java" \
-  --set image.repository="mycluster.icp:8500/default/acmeair-flightservice-java" \
+  --set-string arch.amd64="3" \
+  --set-string arch.ppc64le="0" \
+  --set-string arch.s390x="0"\
+  --set image.repository="${CLUSTER}:8500/default/acmeair-flightservice-java" \
   --set image.pullPolicy="Always" \
   --set service.type="ClusterIP" \
   --set ssl.enabled="false" \
