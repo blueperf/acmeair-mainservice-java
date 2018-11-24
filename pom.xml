@@ -152,7 +152,7 @@
 							<goal>wget</goal>
 						</goals>
 						<configuration>
-							<url>http://central.maven.org/maven2/net/wasdev/wlp/tracer/liberty-opentracing-zipkintracer/1.1.1/liberty-opentracing-zipkintracer-1.1.1-sample.zip</url>
+							<url>http://central.maven.org/maven2/net/wasdev/wlp/tracer/liberty-opentracing-zipkintracer/1.1.2/liberty-opentracing-zipkintracer-1.1.2-sample.zip</url>
 							<unpack>true</unpack>
 							<outputDirectory>${project.build.directory}/zipkintracer</outputDirectory>
 						</configuration>
@@ -359,7 +359,7 @@
 										<feature>microProfile-2.0</feature>
 										<feature>jndi-1.0</feature>
 										<feature>jsp-2.3</feature>
-										<feature>servlet-3.1</feature>
+										<feature>servlet-4.0</feature>
 										<feature>managedBeans-1.0</feature>
 										<feature>websocket-1.1</feature>
 									</features>
