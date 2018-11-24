@@ -1,7 +1,7 @@
 FROM websphere-liberty:microProfile
 
 # Install opentracing usr feature
-RUN wget -t 10 -x -nd -P /opt/ibm/wlp/usr https://github.com/WASdev/sample.opentracing.zipkintracer/releases/download/1.1/liberty-opentracing-zipkintracer-1.1-sample.zip && cd /opt/ibm/wlp/usr && unzip liberty-opentracing-zipkintracer-1.1-sample.zip && rm liberty-opentracing-zipkintracer-1.1-sample.zip
+RUN wget -t 10 -x -nd -P /opt/ibm/wlp/usr https://github.com/WASdev/sample.opentracing.zipkintracer/releases/download/1.1.1/liberty-opentracing-zipkintracer-1.1.1-sample.zip && cd /opt/ibm/wlp/usr && unzip liberty-opentracing-zipkintracer-1.1.1-sample.zip && rm liberty-opentracing-zipkintracer-1.1.1-sample.zip
 
 #COPY with chown to support liberty non-root default user account. This option supported only docker version >= 17.09
 #Liberty docker image doc (https://hub.docker.com/_/websphere-liberty/)
