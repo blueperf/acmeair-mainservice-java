@@ -11,3 +11,4 @@ target/
 .factorypath
 src/main/webapp/META-INF/MANIFEST.MF
 /.apt_generated_tests/
+wlp/

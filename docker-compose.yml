@@ -31,20 +31,27 @@ acmeair-nginx1:
 
 acmeair-mainservice-java:
   container_name: acmeair-mainservice-java
+  dockerfile: Dockerfile-base
   net: ${NETWORK}
   build: ../acmeair-mainservice-java/
   environment:
     - LICENSE=accept
+  volumes:
+    - ./security:/config/resources/security
 
 acmeair-authservice-java:
   container_name: acmeair-authservice-java
+  dockerfile: Dockerfile-base
   net: ${NETWORK}
   build: ../acmeair-authservice-java/
   environment:
     - LICENSE=accept
+  volumes:
+    - ./security:/config/resources/security
 
 acmeair-bookingservice-java:
   container_name: acmeair-bookingservice-java
+  dockerfile: Dockerfile-base
   net: ${NETWORK}
   build: ../acmeair-bookingservice-java/
   environment:
@@ -52,9 +59,11 @@ acmeair-bookingservice-java:
     - MONGO_HOST=acmeair-booking-db
   volumes_from:
     - acmeair-booking-db
-
+  volumes:
+    - ./security:/config/resources/security
 acmeair-customerservice-java:
   container_name: acmeair-customerservice-java
+  dockerfile: Dockerfile-base
   net: ${NETWORK}
   build: ../acmeair-customerservice-java/
   environment:
@@ -62,9 +71,11 @@ acmeair-customerservice-java:
     - MONGO_HOST=acmeair-customer-db
   volumes_from:
     - acmeair-customer-db
-
+  volumes:
+    - ./security:/config/resources/security
 acmeair-flightservice-java:
   container_name: acmeair-flightservice-java
+  dockerfile: Dockerfile-base
   net: ${NETWORK}
   build: ../acmeair-flightservice-java/
   environment:
@@ -72,3 +83,5 @@ acmeair-flightservice-java:
     - MONGO_HOST=acmeair-flight-db
   volumes_from:
     - acmeair-flight-db
+  volumes:
+    - ./security:/config/resources/security
