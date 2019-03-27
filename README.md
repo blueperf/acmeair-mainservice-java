@@ -100,3 +100,7 @@ Prerequisites
 	* D.) Deploy all the microservices with [Deploying applications](https://microclimate-dev2ops.github.io/usingapipeline#deploying-applications).
 	* E.) After successful deployments, you can reach the application from the `http://proxy_ip/acmeair` URL.
 	* F.) Go to the **Configuration** page and click the **Load the Database** link.
+
+## Istio Instructions
+
+When using Acmeair with the Istio ingress-gateway, the root context for the services need to be redefined as it does not support rewrites. Use the Dockerfile-istio file to build the images for the flight, booking, customer and auth services as it takes care of the required changes.
