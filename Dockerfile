@@ -1,4 +1,4 @@
-FROM websphere-liberty:microProfile
+FROM websphere-liberty:microProfile1
 RUN installUtility install  --acceptLicense defaultServer
 COPY server.xml /config/server.xml
 COPY jvm.options /config/jvm.options
