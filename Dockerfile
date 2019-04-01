@@ -1,7 +1,7 @@
 FROM websphere-liberty:microProfile2
 
 # Install opentracing usr feature
-RUN wget -t 10 -x -nd -P /opt/ibm/wlp/usr https://github.com/WASdev/sample.opentracing.zipkintracer/releases/download/1.1/liberty-opentracing-zipkintracer-1.1-sample.zip && cd /opt/ibm/wlp/usr && unzip liberty-opentracing-zipkintracer-1.1-sample.zip && rm liberty-opentracing-zipkintracer-1.1-sample.zip
+RUN wget -t 10 -x -nd -P /opt/ibm/wlp/usr https://github.com/WASdev/sample.opentracing.zipkintracer/releases/download/1.3/liberty-opentracing-zipkintracer-1.3-sample.zip && cd /opt/ibm/wlp/usr && unzip liberty-opentracing-zipkintracer-1.3-sample.zip && rm liberty-opentracing-zipkintracer-1.3-sample.zip
 
 COPY /target/liberty/wlp/usr/servers/defaultServer /config/
 COPY src/main/liberty/config/server.xml /config/server.xml
