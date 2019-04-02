@@ -104,3 +104,5 @@ Prerequisites
 ## Istio Instructions
 
 When using Acmeair with the Istio ingress-gateway, the root context for the services need to be redefined as it does not support rewrites. Use the Dockerfile-istio file to build the images for the flight, booking, customer and auth services as it takes care of the required changes.
+
+There is also a sample [manifest file](./manifests/deploy-acmeair-istio.yaml) for deployment of the Acmeair application in a Istio service mesh, with all services and deployments required to run the application, including the gateway and virtual services definition. The required Mongo databases are also deployed as pods/services. You need to define the docker images to be used and inject the sidecars, either automatically or manually (with kubectl kube-inject command).  
