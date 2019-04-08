@@ -25,5 +25,4 @@
 	<webApplication name="acmeair-mainservice"
 		location="acmeair-mainservice-java-2.0.0-SNAPSHOT.war"
 		contextRoot="/acmeair" />
-        <keyStore id="defaultKeyStore" password="secret" location="/config/resources/security/key.jks"/>
 </server>
