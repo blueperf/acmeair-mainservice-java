@@ -13,6 +13,7 @@
 # limitations under the License.
 
 #!/bin/bash
+set -euxo pipefail
 
 if [[ "${1}" == "--with-microclimate" ]]
 then
@@ -21,29 +22,31 @@ else
   DOCKERFILE=Dockerfile-base
 fi
 
+CLUSTER=${1:-mycluster.icp} 
 
 cd "$(dirname "$0")"
 cd ..
 mvn clean package
-docker build -t mycluster.icp:8500/default/acmeair-mainservice-java -f ${DOCKERFILE} .
-docker push mycluster.icp:8500/default/acmeair-mainservice-java
+
+docker build -t ${CLUSTER}/default/acmeair-mainservice-java -f ${DOCKERFILE} .
+docker push ${CLUSTER}/default/acmeair-mainservice-java
 
 cd ../acmeair-authservice-java
 mvn clean package
-docker build -t mycluster.icp:8500/default/acmeair-authservice-java -f ${DOCKERFILE} .
-docker push mycluster.icp:8500/default/acmeair-authservice-java
+docker build -t ${CLUSTER}/default/acmeair-authservice-java -f ${DOCKERFILE} .
+docker push ${CLUSTER}/default/acmeair-authservice-java
 
 cd ../acmeair-bookingservice-java
 mvn clean package
-docker build -t mycluster.icp:8500/default/acmeair-bookingservice-java -f ${DOCKERFILE} .
-docker push mycluster.icp:8500/default/acmeair-bookingservice-java
+docker build -t ${CLUSTER}/default/acmeair-bookingservice-java -f ${DOCKERFILE} .
+docker push ${CLUSTER}/default/acmeair-bookingservice-java
 
 cd ../acmeair-customerservice-java
 mvn clean package
-docker build -t mycluster.icp:8500/default/acmeair-customerservice-java -f ${DOCKERFILE} .
-docker push mycluster.icp:8500/default/acmeair-customerservice-java
+docker build -t ${CLUSTER}/default/acmeair-customerservice-java -f ${DOCKERFILE} .
+docker push ${CLUSTER}/default/acmeair-customerservice-java
 
 cd ../acmeair-flightservice-java
 mvn clean package
-docker build -t mycluster.icp:8500/default/acmeair-flightservice-java -f ${DOCKERFILE} .
-docker push mycluster.icp:8500/default/acmeair-flightservice-java
+docker build -t ${CLUSTER}/default/acmeair-flightservice-java -f ${DOCKERFILE} .
+docker push ${CLUSTER}/default/acmeair-flightservice-java

@@ -83,6 +83,7 @@ Prerequisites
 * [Install Microclimate.](https://microclimate-dev2ops.github.io/installlocally)
 * [Install IBM Cloud Private.](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.0/installing/installing.html)
 * [Install Microclimate on IBM Cloud Private.](https://github.com/IBM/charts/blob/master/stable/ibm-microclimate/README.md)
+* Microclimate and AcmeAir microservices integration supported from three branches. (master, microprofile-1.4, microclimate-mp-1.3)     
 
 1. Import the following microservices into Microclimate with [Importing projects](https://microclimate-dev2ops.github.io/importingaproject):
 	* [acmeair-mainservice-java](https://github.com/blueperf/acmeair-mainservice-java)
@@ -91,12 +92,17 @@ Prerequisites
 	* [acmeair-customerservice-java](https://github.com/blueperf/acmeair-customerservice-java)
 	* [acmeair-flightservice-java](https://github.com/blueperf/acmeair-flightservice-java)
 
-2. After you import each project, use the `git checkout microclimate-mp-1.3` command from the Theia editor terminal to check out the `microclimate-mp-1.3` branch from master.
-		
-3. After you import all the microservices into Microclimate, you can deploy projects into IBM Cloud Private: 
+	
+2. After you import all the microservices into Microclimate, you can deploy projects into IBM Cloud Private: 
 	* A.) Connect the remote Microclimate instance from your Microclimate dashboard with [Connecting the local and IBM Cloud Private installations](https://microclimate-dev2ops.github.io/connectlocalandcloud).
 	* B.) Create a pipeline for each microservice with [Creating a build pipeline](https://microclimate-dev2ops.github.io/usingapipeline#creating-a-build-pipeline).
 	* C.) After a pipeline is created successfully, you can add deployments.
 	* D.) Deploy all the microservices with [Deploying applications](https://microclimate-dev2ops.github.io/usingapipeline#deploying-applications).
 	* E.) After successful deployments, you can reach the application from the `http://proxy_ip/acmeair` URL.
 	* F.) Go to the **Configuration** page and click the **Load the Database** link.
+
+## Istio Instructions
+
+When using Acmeair with the Istio ingress-gateway, the root context for the services need to be redefined as it does not support rewrites. Use the Dockerfile-istio file to build the images for the flight, booking, customer and auth services as it takes care of the required changes.
+
+There is also a sample [manifest file](./manifests/deploy-acmeair-istio.yaml) for deployment of the Acmeair application in a Istio service mesh, with all services and deployments required to run the application, including the gateway and virtual services definition. The required Mongo databases are also deployed as pods/services. You need to define the docker images to be used and inject the sidecars, either automatically or manually (with kubectl kube-inject command).  
