@@ -100,7 +100,7 @@ spec:
       containers:
         - env:
           - name: JVM_ARGS
-            value: "-Dcom.acmeair.client.CustomerClient/mp-rest/url=http://customer:9080/customer -Dcom.acmeair.client.FlightClient/mp-rest/url=http://flight:9080/flight"
+            value: "-Dcom.acmeair.client.CustomerClient/mp-rest/url=http://customer:9080/customer -Dcom.acmeair.client.FlightClient/mp-rest/url=http://flight:9080/flight -Dmp.jwt.verify.publickey.location=http://acmeair-auth-service:9080/getJwk"
           - name: MONGO_HOST
             value: booking-db
           - name: USERNAME
@@ -149,6 +149,8 @@ spec:
           ports:
             - containerPort: 9080
           env:
+            - name: JVM_ARGS
+              value: "-Dmp.jwt.verify.publickey.location=http://acmeair-auth-service:9080/getJwk"
             - name: MONGO_HOST
               value: customer-db
             - name: USERNAME
