@@ -14,28 +14,36 @@
 
 #!/bin/bash
 
+if [[ "${1}" == "--with-microclimate" ]]
+then
+  DOCKERFILE=Dockerfile
+else
+  DOCKERFILE=Dockerfile-base
+fi
+
+
 cd "$(dirname "$0")"
 cd ..
 mvn clean package
-docker build -t mycluster.icp:8500/default/acmeair-mainservice-java .
+docker build -t mycluster.icp:8500/default/acmeair-mainservice-java -f ${DOCKERFILE} .
 docker push mycluster.icp:8500/default/acmeair-mainservice-java
 
 cd ../acmeair-authservice-java
 mvn clean package
-docker build -t mycluster.icp:8500/default/acmeair-authservice-java .
+docker build -t mycluster.icp:8500/default/acmeair-authservice-java -f ${DOCKERFILE} .
 docker push mycluster.icp:8500/default/acmeair-authservice-java
 
 cd ../acmeair-bookingservice-java
 mvn clean package
-docker build -t mycluster.icp:8500/default/acmeair-bookingservice-java .
+docker build -t mycluster.icp:8500/default/acmeair-bookingservice-java -f ${DOCKERFILE} .
 docker push mycluster.icp:8500/default/acmeair-bookingservice-java
 
 cd ../acmeair-customerservice-java
 mvn clean package
-docker build -t mycluster.icp:8500/default/acmeair-customerservice-java .
+docker build -t mycluster.icp:8500/default/acmeair-customerservice-java -f ${DOCKERFILE} .
 docker push mycluster.icp:8500/default/acmeair-customerservice-java
 
 cd ../acmeair-flightservice-java
 mvn clean package
-docker build -t mycluster.icp:8500/default/acmeair-flightservice-java .
+docker build -t mycluster.icp:8500/default/acmeair-flightservice-java -f ${DOCKERFILE} .
 docker push mycluster.icp:8500/default/acmeair-flightservice-java
