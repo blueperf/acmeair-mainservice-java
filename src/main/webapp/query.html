@@ -238,6 +238,9 @@
 			content : xhrContent,
 			url: window.location.protocol+ '//' + window.location.host + '/booking/bookflights',
 			handleAs: "json",
+			headers: {
+                "Authorization" : "Bearer " + dojo.cookie("jwt_token")
+            },
 			load : function(response, ioArgs) {
 				dojo.byId("bookingToFlight").innerHTML = response.departBookingId;
 				if (response.returnBookingId) {

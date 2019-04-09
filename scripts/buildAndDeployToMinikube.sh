@@ -14,11 +14,11 @@
 
 #!/bin/bash
 
-if [[ "${1}" == "--with-msb" ]]
+if [[ "${1}" == "--with-microclimate" ]]
 then 
   MANIFESTS=manifests
 else
-  MANIFESTS=manifests-no-msb
+  MANIFESTS=manifests-no-mc
 fi
 
 cd "$(dirname "$0")"

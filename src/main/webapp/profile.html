@@ -59,6 +59,9 @@
 	    	dojo.xhrGet({
 				url: window.location.protocol + '//' + window.location.host + '/customer/byid/' + userid,
 				handleAs: "json",
+                headers: {
+                    "Authorization" : "Bearer " + dojo.cookie("jwt_token")
+                },
 				load: function(response, ioArgs) {
 					updateFormData(response);
 				},
@@ -119,7 +122,8 @@
 			url: window.location.protocol+ '//' + window.location.host + '/customer/byid/' + userid,
 			postData : dojo.toJson(customerData),
 			handleAs: "json",
-			headers: { "Content-Type": "application/json"},
+			headers: { "Content-Type": "application/json",
+			           "Authorization" : "Bearer " + dojo.cookie("jwt_token")},
 			load: function(response, ioArgs) {
 				updateFormData(response);
 				dijit.byId('updatedStatusDialog').show()

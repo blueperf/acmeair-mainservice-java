@@ -50,6 +50,9 @@
 		    	dojo.xhrGet({
 					url: window.location.protocol+ '//' + window.location.host + "/booking/byuser/" + dojo.cookie("loggedinuser"),
 					handleAs: "json",
+					headers: {
+	                    "Authorization" : "Bearer " + dojo.cookie("jwt_token")
+	                },
 					load: function(response, ioArgs) {
 						var theData = { items : response };
 						var newStore = new dojo.data.ItemFileWriteStore({
@@ -159,6 +162,9 @@
 				dojo.xhrPost({
 					content : xhrContent,
 					url : window.location.protocol+ '//' + window.location.host + '/booking/cancelbooking',
+					headers: {
+	                    "Authorization" : "Bearer " + dojo.cookie("jwt_token")
+	                },
 					load : function(response, ioArgs) {
 						alert("Booking Canceled.");
 						createAndStartGrid();

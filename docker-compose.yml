@@ -31,6 +31,7 @@ acmeair-nginx1:
 
 acmeair-mainservice-java:
   container_name: acmeair-mainservice-java
+  dockerfile: Dockerfile-base
   net: ${NETWORK}
   build: ../acmeair-mainservice-java/
   environment:
@@ -38,6 +39,7 @@ acmeair-mainservice-java:
 
 acmeair-authservice-java:
   container_name: acmeair-authservice-java
+  dockerfile: Dockerfile-base
   net: ${NETWORK}
   build: ../acmeair-authservice-java/
   environment:
@@ -45,6 +47,7 @@ acmeair-authservice-java:
 
 acmeair-bookingservice-java:
   container_name: acmeair-bookingservice-java
+  dockerfile: Dockerfile-base
   net: ${NETWORK}
   build: ../acmeair-bookingservice-java/
   environment:
@@ -55,6 +58,7 @@ acmeair-bookingservice-java:
 
 acmeair-customerservice-java:
   container_name: acmeair-customerservice-java
+  dockerfile: Dockerfile-base
   net: ${NETWORK}
   build: ../acmeair-customerservice-java/
   environment:
@@ -65,6 +69,7 @@ acmeair-customerservice-java:
 
 acmeair-flightservice-java:
   container_name: acmeair-flightservice-java
+  dockerfile: Dockerfile-base
   net: ${NETWORK}
   build: ../acmeair-flightservice-java/
   environment:
