@@ -1,0 +1,6 @@
+dependencies:
+- name: ibm-open-liberty
+  repository: https://raw.githubusercontent.com/IBM/charts/master/repo/stable/
+  version: 1.9.0
+digest: sha256:59a8bc399e862418ee3fd560dd23ebef31440141228ddf3b7c6ee0fca71ee470
+generated: 2019-04-30T14:05:38.497569574-04:00

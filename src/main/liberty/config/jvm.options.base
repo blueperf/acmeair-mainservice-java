@@ -1,3 +1,2 @@
--Xmx256m
 -Dhttp.keepalive=true
 -Dhttp.maxConnections=100
