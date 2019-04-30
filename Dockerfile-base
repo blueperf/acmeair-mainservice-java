@@ -1,10 +1,18 @@
 FROM websphere-liberty:microProfile2
+
 # Install opentracing usr feature
+USER 0
+RUN apt-get update \
+&& apt-get install -y --no-install-recommends wget unzip \
+&& rm -rf /var/lib/apt/lists/*
+
+USER 1001
 RUN wget -t 10 -x -nd -P /opt/ibm/wlp/usr https://github.com/WASdev/sample.opentracing.zipkintracer/releases/download/1.1/liberty-opentracing-zipkintracer-1.1-sample.zip && cd /opt/ibm/wlp/usr && unzip liberty-opentracing-zipkintracer-1.1-sample.zip && rm liberty-opentracing-zipkintracer-1.1-sample.zip
 
-COPY src/main/liberty/config/server.xml /config/server.xml
-COPY /src/main/liberty/config/jvm.options.base /config/jvm.options
-COPY /target/acmeair-mainservice-java-2.0.0-SNAPSHOT.war /config/apps/
+
+COPY --chown=1001:0 src/main/liberty/config/server.xml /config/server.xml
+COPY --chown=1001:0 /src/main/liberty/config/jvm.options.base /config/jvm.options
+COPY --chown=1001:0 /target/acmeair-flightservice-java-2.0.0-SNAPSHOT.war /config/apps/
 
 
 # Don't fail on rc 22 feature already installed
