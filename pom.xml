@@ -69,6 +69,7 @@
 	</properties>
 
 	<build>
+	    <pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -198,6 +199,7 @@
 			</plugin>
 			<!-- Microclimate End Plugin to run functional tests -->
 		</plugins>
+		</pluginManagement>
 	</build>
 
 	<dependencies>
