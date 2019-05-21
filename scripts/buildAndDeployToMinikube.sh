@@ -25,31 +25,31 @@ cd "$(dirname "$0")"
 cd ..
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-docker build -t acmeair-mainservice-java .
+docker build --pull -t acmeair-mainservice-java .
 kubectl apply -f ${MANIFESTS}
 
 cd ../acmeair-authservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-docker build -t acmeair-authservice-java .
+docker build --pull -t acmeair-authservice-java .
 kubectl apply -f ${MANIFESTS}
 
 cd ../acmeair-bookingservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-docker build -t acmeair-bookingservice-java .
+docker build --pull -t acmeair-bookingservice-java .
 kubectl apply -f ${MANIFESTS}
 
 cd ../acmeair-customerservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-docker build -t acmeair-customerservice-java .
+docker build --pull -t acmeair-customerservice-java .
 kubectl apply -f ${MANIFESTS}
 
 cd ../acmeair-flightservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-docker build -t acmeair-flightservice-java .
+docker build --pull -t acmeair-flightservice-java .
 kubectl apply -f ${MANIFESTS}
 
 

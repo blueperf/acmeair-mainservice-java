@@ -34,25 +34,25 @@ cd "$(dirname "$0")"
 cd ..
 mvn clean package
 
-docker build -t ${CLUSTER}:8500/${NAMESPACE}/acmeair-mainservice-java -f ${DOCKERFILE} .
+docker build --pull -t ${CLUSTER}:8500/${NAMESPACE}/acmeair-mainservice-java -f ${DOCKERFILE} .
 docker push ${CLUSTER}:8500/${NAMESPACE}/acmeair-mainservice-java
 
 cd ../acmeair-authservice-java
 mvn clean package
-docker build -t ${CLUSTER}:8500/${NAMESPACE}/acmeair-authservice-java -f ${DOCKERFILE} .
+docker build --pull -t ${CLUSTER}:8500/${NAMESPACE}/acmeair-authservice-java -f ${DOCKERFILE} .
 docker push ${CLUSTER}:8500/${NAMESPACE}/acmeair-authservice-java
 
 cd ../acmeair-bookingservice-java
 mvn clean package
-docker build -t ${CLUSTER}:8500/${NAMESPACE}/acmeair-bookingservice-java -f ${DOCKERFILE} .
+docker build --pull -t ${CLUSTER}:8500/${NAMESPACE}/acmeair-bookingservice-java -f ${DOCKERFILE} .
 docker push ${CLUSTER}:8500/${NAMESPACE}/acmeair-bookingservice-java
 
 cd ../acmeair-customerservice-java
 mvn clean package
-docker build -t ${CLUSTER}:8500/${NAMESPACE}/acmeair-customerservice-java -f ${DOCKERFILE} .
+docker build --pull -t ${CLUSTER}:8500/${NAMESPACE}/acmeair-customerservice-java -f ${DOCKERFILE} .
 docker push ${CLUSTER}:8500/${NAMESPACE}/acmeair-customerservice-java
 
 cd ../acmeair-flightservice-java
 mvn clean package
-docker build -t ${CLUSTER}:8500/${NAMESPACE}/acmeair-flightservice-java -f ${DOCKERFILE} .
+docker build --pull -t ${CLUSTER}:8500/${NAMESPACE}/acmeair-flightservice-java -f ${DOCKERFILE} .
 docker push ${CLUSTER}:8500/${NAMESPACE}/acmeair-flightservice-java
