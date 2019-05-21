@@ -25,7 +25,7 @@ Prereq: [Install Docker, docker-compose, and start Docker daemon on your local m
 2. Create docker network
  * docker network create --driver bridge my-net
 3. Build/Start Containers. This will build all the micro-services, mongo db instances, and an nginx proxy.
-    * docker-compose build
+    * docker-compose --pull build
     * NETWORK=my-net docker-compose up
 
 4. Go to http://docker_machine_ip/main/acmeair
