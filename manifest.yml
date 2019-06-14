@@ -4,6 +4,6 @@ applications:
   timeout: 180
   name: acmeairmainservicejava
   buildpack: liberty-for-java
-  path: ./target/acmeair-mainservice-java-2.0.0-SNAPSHOT.zip
+  path: ./target/acmeair-mainservice-java-3.0.0-SNAPSHOT.zip
   memory: 512M
   random-route: true
