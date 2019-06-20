@@ -9,6 +9,13 @@ ssl:
   enabled: false
 
 ingress:
-  enabled: true
-  rewriteTarget: "/acmeair"
-  path: "/acmeair"
+    enabled: true
+    rewriteTarget: "/acmeair"
+    path: "/acmeair"
+    host: ""
+    secretName: ""
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/connection-proxy-header: "keep-alive"
+      ingress.kubernetes.io/ssl-redirect: "false"
+      ingress.kubernetes.io/connection-proxy-header: "keep-alive"
