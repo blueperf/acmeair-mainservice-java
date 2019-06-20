@@ -216,11 +216,11 @@ ibm-open-liberty:
     path: "/acmeair"
     host: ""
     secretName: ""
-    annotations: {}
-    # Example:
-    # annotations:
-    #   nginx.ingress.kubernetes.io/enable-cors: "true"
-    #   nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS"
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/connection-proxy-header: "keep-alive"
+      ingress.kubernetes.io/ssl-redirect: "false"
+      ingress.kubernetes.io/connection-proxy-header: "keep-alive"
 
     labels: {}
     # Example:
