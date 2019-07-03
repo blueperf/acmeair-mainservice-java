@@ -3,19 +3,12 @@
   <!-- Enable features -->
   <featureManager>
     <feature>usr:opentracingZipkin-0.31</feature>
+    <feature>microProfile-3.0</feature>
     <feature>jndi-1.0</feature>
     <feature>jsp-2.3</feature>
     <feature>servlet-4.0</feature>
     <feature>managedBeans-1.0</feature>
     <feature>websocket-1.1</feature>
-    <feature>mpConfig-1.3</feature>
-    <feature>mpFaultTolerance-2.0</feature>
-    <feature>mpHealth-2.0</feature>
-    <feature>mpJwt-1.1</feature>
-    <feature>mpMetrics-2.0</feature>
-    <feature>mpOpenAPI-1.1</feature>
-    <feature>mpOpenTracing-1.3</feature>
-    <feature>mpRestClient-1.3</feature>
   </featureManager>
 
 	<!-- To access this server from a remote client add a host attribute to 
