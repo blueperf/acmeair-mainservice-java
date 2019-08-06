@@ -1,4 +1,4 @@
-FROM open-liberty:microProfile2
+FROM open-liberty:microProfile3
 
 # Install opentracing usr feature
 USER 0
