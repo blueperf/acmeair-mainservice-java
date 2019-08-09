@@ -41,5 +41,5 @@ stages:
       application: ${CF_APP}
     script: |-
       #!/bin/bash
-      cf push "${CF_APP}" -p target/acmeair-mainservice-java-2.0.0-SNAPSHOT.zip
+      cf push "${CF_APP}" -p target/acmeair-mainservice-java-3.0.0-SNAPSHOT.zip
       # cf logs "${CF_APP}" --recent

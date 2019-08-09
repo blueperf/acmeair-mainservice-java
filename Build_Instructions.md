@@ -34,7 +34,7 @@ If the sample git repository hasn't been cloned yet, use git tools integrated in
 *Note:* If you did not use Eclipse to clone the git repository, follow from step 3, but navigate to the cloned repository directory rather than pasting its name in step 4.
 
 This will download prerequisite jars and build:  
-* acmeair-mainservice-java/target/acmeair-mainservice-java-2.0.0-SNAPSHOT.war  
+* acmeair-mainservice-java/target/acmeair-mainservice-java-3.0.0-SNAPSHOT.war  
 
 
 # Building acmeair main service using the Command Line
@@ -69,4 +69,4 @@ Linux:
 	mvn clean package
 
 This will download prerequisite jars and build:  
-* acmeair-mainservice-java/target/acmeair-mainservice-java-2.0.0-SNAPSHOT.war   
+* acmeair-mainservice-java/target/acmeair-mainservice-java-3.0.0-SNAPSHOT.war   

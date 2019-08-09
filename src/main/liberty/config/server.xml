@@ -3,7 +3,7 @@
   <!-- Enable features -->
   <featureManager>
     <feature>usr:opentracingZipkin-0.31</feature>
-    <feature>microProfile-2.2</feature>
+    <feature>microProfile-3.0</feature>
     <feature>jndi-1.0</feature>
     <feature>jsp-2.3</feature>
     <feature>servlet-4.0</feature>
@@ -23,6 +23,6 @@
 	<opentracingZipkin />
 
 	<webApplication name="acmeair-mainservice"
-		location="acmeair-mainservice-java-2.0.0-SNAPSHOT.war"
+		location="acmeair-mainservice-java-3.0.0-SNAPSHOT.war"
 		contextRoot="/acmeair" />
 </server>
