@@ -2,13 +2,7 @@
 <server description="new server">
   <!-- Enable features -->
   <featureManager>
-    <feature>usr:opentracingZipkin-0.31</feature>
     <feature>microProfile-3.0</feature>
-    <feature>jndi-1.0</feature>
-    <feature>jsp-2.3</feature>
-    <feature>servlet-4.0</feature>
-    <feature>managedBeans-1.0</feature>
-    <feature>websocket-1.1</feature>
   </featureManager>
 
 	<!-- To access this server from a remote client add a host attribute to 
@@ -20,9 +14,7 @@
 	<quickStartSecurity userName="${env.USERNAME}"
 		userPassword="${env.PASSWORD}" />
 
-	<opentracingZipkin />
-
 	<webApplication name="acmeair-mainservice"
-		location="acmeair-mainservice-java-3.0.0-SNAPSHOT.war"
+		location="acmeair-mainservice-java-3.0.war"
 		contextRoot="/acmeair" />
 </server>
