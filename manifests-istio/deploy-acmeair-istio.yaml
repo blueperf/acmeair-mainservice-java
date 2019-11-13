@@ -1,0 +1,407 @@
+###### Main Service ######
+apiVersion: v1
+kind: Service
+metadata:
+  name: main
+  namespace: default
+  labels:
+    app: main
+spec:
+  ports:
+    - port: 9080
+      name: http
+  selector:
+    app: main
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: main
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: main
+    spec:
+      containers:
+        - name: main
+          image: IMAGE_NAME
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9080
+---
+###### Flight Service ######
+apiVersion: v1
+kind: Service
+metadata:
+  name: flight
+  labels:
+    app: flight
+spec:
+  ports:
+    - port: 9080
+      name: http
+  selector:
+    app: flight
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flight
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: flight
+    spec:
+      containers:
+        - name: flight
+          image: IMAGE_NAME
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9080
+          env:
+            - name: MONGO_HOST
+              value: flight-db
+            - name: USERNAME
+              value: admin
+            - name: PASSWORD
+              value: password
+            - name: SECURE_SERVICE_CALLS
+              value: 'true'
+---
+###### Booking Service ######
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking
+  labels:
+    app: booking
+spec:
+  ports:
+    - port: 9080
+      name: http
+  selector:
+    app: booking
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: booking
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: booking
+    spec:
+      containers:
+        - env:
+          - name: JVM_ARGS
+            value: "-Dcom.acmeair.client.CustomerClient/mp-rest/url=http://customer:9080/customer -Dcom.acmeair.client.FlightClient/mp-rest/url=http://flight:9080/flight -Dmp.jwt.verify.publickey.location=http://auth:9080/auth/getJwk"
+          - name: MONGO_HOST
+            value: booking-db
+          - name: USERNAME
+            value: admin
+          - name: PASSWORD
+            value: password
+          - name: TRACK_REWARD_MILES
+            value: 'true'
+          - name: SECURE_SERVICE_CALLS
+            value: 'true'
+          name: booking
+          image: IMAGE_NAME
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9080
+---
+###### Customer Service ######
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer
+  labels:
+    app: customer
+spec:
+  ports:
+    - port: 9080
+      name: http
+  selector:
+    app: customer
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: customer
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: customer
+    spec:
+      containers:
+        - name: customer
+          image: IMAGE_NAME
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9080
+          env:
+            - name: JVM_ARGS
+              value: "-Dmp.jwt.verify.publickey.location=http://auth:9080/auth/getJwk"
+            - name: MONGO_HOST
+              value: customer-db
+            - name: USERNAME
+              value: admin
+            - name: PASSWORD
+              value: password
+            - name: SECURE_SERVICE_CALLS
+              value: 'true'
+---
+###### Auth Service ######
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth
+  labels:
+    app: auth
+spec:
+  ports:
+    - port: 9080
+      name: http
+  selector:
+    app: auth
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+      - env:
+        - name: JVM_ARGS
+          value: "-Dcom.acmeair.client.CustomerClient/mp-rest/url=http://customer:9080/customer"
+        name: auth
+        image: IMAGE_NAME
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 9080
+---
+##### Flight Database #####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    service: flight-db
+    app: flight-db
+  name: flight-db
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: flight-db
+    app: flight-db
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: flight-db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: flight-db
+        app: flight-db
+    spec:
+      containers:
+      - image: mongo
+        name: flight-db
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+##### Booking Database  #####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    service: booking-db
+    app: booking-db
+  name: booking-db
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: booking-db
+    app: booking-db
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: booking-db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: booking-db
+        app: booking-db
+    spec:
+      containers:
+      - image: mongo
+        name: booking-db
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+##### Customer Database #####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    service: customer-db
+    app: customer-db
+  name: customer-db
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: customer-db
+    app: customer-db
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: customer-db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: customer-db
+        app: customer-db
+    spec:
+      containers:
+      - image: mongo
+        name: customer-db
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+##################################################################
+# Gateway
+##################################################################
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: acmeair-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+###################################################################
+# Virtual Services
+###################################################################
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: acmeair
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - acmeair-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /flight
+    route:
+    - destination:
+        port:
+          number: 9080
+        host: flight
+  - match:
+    - uri:
+        prefix: /booking
+    route:
+    - destination:
+        port:
+          number: 9080
+        host: booking
+  - match:
+    - uri:
+        prefix: /customer
+    route:
+    - destination:
+        port:
+          number: 9080
+        host: customer
+  - match:
+    - uri:
+        prefix: /auth
+    route:
+    - destination:
+        port:
+          number: 9080
+        host: auth
+  - match:
+    - uri:
+        prefix: /acmeair
+    route:
+    - destination:
+        port:
+          number: 9080
+        host: main
+---

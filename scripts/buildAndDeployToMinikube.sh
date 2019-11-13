@@ -14,12 +14,7 @@
 
 #!/bin/bash
 
-if [[ "${1}" == "--with-microclimate" ]]
-then 
-  MANIFESTS=manifests
-else
-  MANIFESTS=manifests-no-mc
-fi
+MANIFESTS=manifests
 
 cd "$(dirname "$0")"
 cd ..
