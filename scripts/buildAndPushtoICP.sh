@@ -17,7 +17,7 @@ set -exo pipefail
 
 NAMESPACE="default"
 
-DOCKERFILE=Dockerfile-base
+DOCKERFILE=Dockerfile
 CLUSTER=${1:-mycluster.icp}
 
 
