@@ -17,7 +17,7 @@ MANIFESTS=manifests-openshift
 
 if [[ ${2} == "" ]]
 then
-  echo "Usage: buildAndDeployToMinishift.sh <IMAGE_PREFIX> <ROUTE_PATH>"
+  echo "Usage: buildAndDeployToOpenshift.sh <IMAGE_PREFIX> <ROUTE_PATH>"
   exit
 fi
 
