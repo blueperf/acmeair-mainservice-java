@@ -29,7 +29,18 @@ Prereq: [Install Docker, docker-compose, and start Docker daemon on your local m
 4. Go to http://docker_machine_ip/main/acmeair
 5. Go to the Configuration Page and Load the Database
 
-## TODO minishift and openshift Instructions
+## Openshift Instructions
+This doc assumes that
+* Openshift is installed and configured
+* The docker env is logged into the openshift image repository
+  * Example: docker login -u developer -p $(oc whoami -t) 172.30.1.1:5000
+* oc and kubectl are attached the Openshift cluster
+
+1. Create new procject: oc new-project acmeair
+2. Determine host for the route. 
+   * Example: acmeair.192.168.99.101.nip.io (The part after acmeair. should match other routes for you cluster) 
+3. Run ./buildAndDeployToOpenshift.sh docker-repo/project_name host_name
+   * Example: ./buildAndDeployToOpenshift.sh 172.30.1.1:5000/acmeair acmeair.192.168.99.101.nip.io
 
 ## Minikube Instructions
 
@@ -48,7 +59,7 @@ Prereq: [Install Docker, docker-compose, and start Docker daemon on your local m
 ## IBM Cloud Private Instructions
 This doc assumes that
 * ICP is installed and configured
-* The docker env is logged into the CFC docker repo
+* The docker env is logged into the ICP docker repo
   * docker login mycluster.icp:8500
 
 * kubectl and helm are attached the ICP cluster
