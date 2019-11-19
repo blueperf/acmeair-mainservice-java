@@ -10,7 +10,6 @@ ssl:
 
 ingress:
   enabled: true
-  rewriteTarget: "/acmeair"
   path: "/acmeair"
   host: ""
   secretName: ""
