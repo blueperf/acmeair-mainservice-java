@@ -1,4 +1,4 @@
-FROM websphere-liberty:kernel
+FROM open-liberty:kernel
 
 COPY src/main/liberty/config/server.xml /config/server.xml
 COPY src/main/liberty/config/server.env /config/server.env
@@ -12,5 +12,4 @@ RUN chown 1001:0 /config/jvm.options
 RUN chown 1001:0 /config/apps/acmeair-mainservice-java-3.0.war
 USER 1001
 
-RUN configure.sh 
-#|| if [ $? -ne 22 ]; then exit $?; fi
+RUN configure.sh || if [ $? -ne 22 ]; then exit $?; fi

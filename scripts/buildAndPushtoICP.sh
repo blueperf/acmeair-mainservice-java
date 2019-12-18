@@ -17,18 +17,9 @@ set -exo pipefail
 
 NAMESPACE="default"
 
-if [[ "${1}" == "--with-microclimate" ]]
-then
-  DOCKERFILE=Dockerfile
-  CLUSTER=${2:-mycluster.icp}
-elif [[ "${1}" == "--open-liberty" ]]
-then
-  DOCKERFILE=Dockerfile-ol-base
-  CLUSTER=${2:-mycluster.icp}
-else
-  DOCKERFILE=Dockerfile-base
-  CLUSTER=${1:-mycluster.icp}
-fi
+DOCKERFILE=Dockerfile
+CLUSTER=${1:-mycluster.icp}
+
 
 cd "$(dirname "$0")"
 cd ..
