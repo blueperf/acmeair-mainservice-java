@@ -58,11 +58,26 @@
 				alert(response);
 			}
 		});
+    	
+    	dojo.xhrGet({
+        url: window.location.protocol+ '//' + window.location.host + '/flight/loader/query',
+        handleAs: "text",
+        load: function(response, ioArgs) {
+            updateFlightFormData(response);
+        },
+        error: function(response, ioArgs) {
+            alert(response);
+        }
+    });
     }
     
     function updateFormData(loaderdata) {
 		dijit.byId('customerSizeInput').set('value', loaderdata);
     }
+    
+    function updateFlightFormData(loaderdata) {
+      dijit.byId('flightDaysInput').set('value', loaderdata);
+  }
     
     <!-- load customers and then flights -->
     function loadCustomerDB() {
@@ -86,6 +101,9 @@
     function loadFlightDB() {
     	showWaitDialog();
     	dojo.xhrGet({
+    	  content : {
+    	    daysToLoad: dijit.byId('flightDaysInput').value
+          },
     		url: window.location.protocol+ '//' + window.location.host + '/flight/loader/load',
     		load: function(response, ioArgs) {
     			hideWaitDialog();
@@ -190,7 +208,8 @@
 			<h2>Loader Configuration </h2>
 			<br/>
       		Number of Customers to Load: <input type="text" dojoType="dijit.form.TextBox" id="customerSizeInput" data-dojo-props="trim:true" required="true"></input><br/>
-      		<button dojoType="dijit.form.Button" id="loadDatabaseButton" onClick="clearBookingDB();loadCustomerDB();loadFlightDB();">(Re)Load the Database</button>
+      	    Number of Flight Days to Load: <input type="text" dojoType="dijit.form.TextBox" id="flightDaysInput" data-dojo-props="trim:true" required="true"></input><br/>
+        <button dojoType="dijit.form.Button" id="loadDatabaseButton" onClick="clearBookingDB();loadCustomerDB();loadFlightDB();">(Re)Load the Database</button>
       		</br/>						
 		</div>
 	</div>
