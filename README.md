@@ -8,10 +8,13 @@ This implementation can support running on a variety of runtime platforms includ
 ## Build Instructions
 * Instructions for [setting up and building the codebase](Build_Instructions.md)
 
+## JMeter Instructions
+* Instructions for [driving load to the app after it has been deployed](https://github.com/blueperf/acmeair-mainservice-java/tree/master/jmeter-files)
+
 ## Full Benchmark Installation Instructions on various docker enviornments.
 ![alt text](https://github.com/blueperf/acmeair-mainservice-java/blob/master/images/AcmeairMS.png "AcmeairMS Java")
 
-## Prereq \*IMPORTANT\*
+## Prerequisites
 All of these examples assume you have the acmeair-mainservice-java, acmeair-authservice-java, acmeair-bookingservice-java, acmeair-customerservice-java, and acmeair-flightservice-java directories, (and possibly others) on your docker machine in the same directory. It also assumes all applications have been built with maven.
 
 
