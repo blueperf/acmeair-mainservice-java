@@ -152,7 +152,7 @@
 							<goal>wget</goal>
 						</goals>
 						<configuration>
-							<url>http://central.maven.org/maven2/net/wasdev/wlp/tracer/liberty-opentracing-zipkintracer/1.1.2/liberty-opentracing-zipkintracer-1.1.2-sample.zip</url>
+							<url>https://github.com/WASdev/sample.opentracing.zipkintracer/releases/download/1.2/liberty-opentracing-zipkintracer-1.2-sample.zip</url>
 							<unpack>true</unpack>
 							<outputDirectory>${project.build.directory}/zipkintracer</outputDirectory>
 						</configuration>
