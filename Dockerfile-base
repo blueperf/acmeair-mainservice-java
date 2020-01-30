@@ -1,4 +1,4 @@
-FROM websphere-liberty:microProfile2
+FROM websphere-liberty:full
 
 # Install opentracing usr feature
 USER 0
