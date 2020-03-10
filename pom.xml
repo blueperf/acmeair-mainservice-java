@@ -7,7 +7,7 @@
       <version>RELEASE</version>
    </parent>
    <groupId>acmeair-mainservice-java</groupId>
-   <version>3.0</version>
+   <version>3.3</version>
    <artifactId>acmeair-mainservice-java</artifactId>
    <packaging>war</packaging>
    <name>acmeair-mainservice-java</name>

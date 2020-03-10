@@ -1,6 +1,6 @@
 dependencies:
-- name: ibm-websphere-liberty
+- name: ibm-open-liberty
   repository: https://raw.githubusercontent.com/IBM/charts/master/repo/stable/
   version: 1.9.0
-digest: sha256:2b8b602a63c3cf9347dd0505d9b4dbce81ff9387dcdce0fe34b9acd727a3ddbe
-generated: 2019-04-12T15:04:23.002752796-04:00
+digest: sha256:59a8bc399e862418ee3fd560dd23ebef31440141228ddf3b7c6ee0fca71ee470
+generated: 2019-04-30T14:05:38.497569574-04:00

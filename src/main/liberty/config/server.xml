@@ -2,7 +2,7 @@
 <server description="new server">
   <!-- Enable features -->
   <featureManager>
-    <feature>microProfile-3.2</feature>
+    <feature>microProfile-3.3</feature>
   </featureManager>
 
   <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
@@ -12,7 +12,7 @@
 
   <quickStartSecurity userName="${env.USERNAME}" userPassword="${env.PASSWORD}" />
 
-  <webApplication name="acmeair-mainservice" location="acmeair-mainservice-java-3.0.war" contextRoot="/acmeair">
+  <webApplication name="acmeair-mainservice" location="acmeair-mainservice-java-3.3.war" contextRoot="/acmeair">
     <!-- enable visibility to third party apis -->
     <classloader apiTypeVisibility="api,ibm-api,spec,stable,third-party"/>
   </webApplication>
