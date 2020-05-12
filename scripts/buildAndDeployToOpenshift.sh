@@ -21,20 +21,20 @@ then
   exit
 fi
 
-IMAGE_PREFIX=${1}
-ROUTE_HOST=${2}
+IMAGE_PREFIX_EXTERNAL=${1}
+IMAGE_PREFIX=${2}
+ROUTE_HOST=${3}
 
-
-
-echo "Image Prefix=${IMAGE_PREFIX}"
+echo "Image Prefix External=${IMAGE_PREFIX_EXTERNAL}"
+echo "Image Prefix Internal=${IMAGE_PREFIX}"
 echo "Route Host=${ROUTE_HOST}"
 
 cd "$(dirname "$0")"
 cd ..
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-docker build --pull -t ${IMAGE_PREFIX}/acmeair-mainservice-java:latest .
-docker push ${IMAGE_PREFIX}/acmeair-mainservice-java:latest
+podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-mainservice-java:latest .
+podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-mainservice-java:latest --tls-verify=false
 
 if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml` == 0 ]]
 then
@@ -62,8 +62,8 @@ rm ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml.bak
 cd ../acmeair-authservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-docker build --pull -t ${IMAGE_PREFIX}/acmeair-authservice-java .
-docker push ${IMAGE_PREFIX}/acmeair-authservice-java:latest
+podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-authservice-java .
+podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-authservice-java:latest --tls-verify=false
 
 if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-authservice-java.yaml` == 0 ]]
 then
@@ -91,8 +91,8 @@ rm ${MANIFESTS}/deploy-acmeair-authservice-java.yaml.bak
 cd ../acmeair-bookingservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-docker build --pull -t ${IMAGE_PREFIX}/acmeair-bookingservice-java .
-docker push ${IMAGE_PREFIX}/acmeair-bookingservice-java:latest
+podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java .
+podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java:latest --tls-verify=false
 
 if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml` == 0 ]]
 then
@@ -122,8 +122,8 @@ rm ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml.bak
 cd ../acmeair-customerservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-docker build --pull -t ${IMAGE_PREFIX}/acmeair-customerservice-java .
-docker push ${IMAGE_PREFIX}/acmeair-customerservice-java:latest
+podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java .
+podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java:latest --tls-verify=false
 
 if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml` == 0 ]]
 then
@@ -151,8 +151,8 @@ rm ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml.bak
 cd ../acmeair-flightservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-docker build --pull -t ${IMAGE_PREFIX}/acmeair-flightservice-java .
-docker push ${IMAGE_PREFIX}/acmeair-flightservice-java:latest
+podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java .
+podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java:latest --tls-verify=false
 
 if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml` == 0 ]]
 then
