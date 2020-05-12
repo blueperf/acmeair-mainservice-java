@@ -33,17 +33,22 @@ Prereq: [Install Docker, docker-compose, and start Docker daemon on your local m
 5. Go to the Configuration Page and Load the Database
 
 ## Openshift Instructions
-This doc assumes that
-* Openshift is installed and configured
-* The docker env is logged into the openshift image repository
-  * Example: docker login -u developer -p $(oc whoami -t) 172.30.1.1:5000
-* oc and kubectl are attached the Openshift cluster
+This doc assumes that you are using podman
+* Openshift is installed and configured, and internal image resgitry is availebl and its default-route is exposed.
+* The podman env is logged into the openshift image repository
+  Example:
+  *  oc login https://api.wasocp44k.fake-link.com:6443 -u ocpadmin -p fake-password
+  *  podman login -u ocpadmin -p $(oc whoami -t) --tls-verify=false default-route-openshift-image-registry.apps.wasocp44k.fake-link.com
 
 1. Create new procject: oc new-project acmeair
+2. Determine default-route (The route you logged into above)
+   * Example: default-route-openshift-image-registry.apps.wasocp44k.fake-link.com
+3. Determine internal-route.
+   * Example (usually): image-registry.openshift-image-registry.svc:5000
 2. Determine host for the route. 
-   * Example: acmeair.192.168.99.101.nip.io (The part after acmeair. should match other routes for you cluster) 
-3. Run ./buildAndDeployToOpenshift.sh docker-repo/project_name host_name
-   * Example: ./buildAndDeployToOpenshift.sh 172.30.1.1:5000/acmeair acmeair.192.168.99.101.nip.io
+   * Example: acmeair.apps.wasocp44k.fake-link.com (The part after acmeair. should match other routes for you cluster) 
+3. Run ./buildAndDeployToOpenshift.sh default-route/project_name internal-route/project_name host
+   * Example: ./buildAndDeployToOpenshift.sh default-route-openshift-image-registry.apps.wasocp44k.fake-link.com/acmeair image-registry.openshift-image-registry.svc:5000/acmeair acmeair.apps.wasocp44k.fake-link.com
 
 ## Minikube Instructions
 
