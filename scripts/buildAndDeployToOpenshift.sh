@@ -94,7 +94,7 @@ mvn clean package
 podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java .
 podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java:latest --tls-verify=false
 
-if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml` == 0 ]]
+if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml` == 0 ]]
 then
   echo "Adding ${IMAGE_PREFIX}/"
   sed -i.bak "s@acmeair-bookingservice-java:latest@${IMAGE_PREFIX}/acmeair-bookingservice-java:latest@" ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml
@@ -125,7 +125,7 @@ mvn clean package
 podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java .
 podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java:latest --tls-verify=false
 
-if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml` == 0 ]]
+if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml` == 0 ]]
 then
   echo "Adding ${IMAGE_PREFIX}/"
   sed -i.bak "s@acmeair-customerservice-java:latest@${IMAGE_PREFIX}/acmeair-customerservice-java:latest@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
@@ -154,7 +154,7 @@ mvn clean package
 podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java .
 podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java:latest --tls-verify=false
 
-if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml` == 0 ]]
+if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml` == 0 ]]
 then
   echo "Adding ${IMAGE_PREFIX}/"
   sed -i.bak "s@acmeair-flightservice-java:latest@${IMAGE_PREFIX}/acmeair-flightservice-java:latest@" ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml
