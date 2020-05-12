@@ -12,4 +12,4 @@ RUN chown 1001:0 /config/jvm.options
 RUN chown 1001:0 /config/apps/acmeair-mainservice-java-3.3.war
 USER 1001
 
-RUN configure.sh || if [ $? -ne 22 ]; then exit $?; fi
+RUN configure.sh
