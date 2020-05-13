@@ -33,7 +33,7 @@ cd "$(dirname "$0")"
 cd ..
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-mainservice-java:latest .
+podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-mainservice-java:latest --no-cache .
 podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-mainservice-java:latest --tls-verify=false
 
 if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml` == 0 ]]
@@ -62,7 +62,7 @@ rm ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml.bak
 cd ../acmeair-authservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-authservice-java .
+podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-authservice-java --no-cache .
 podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-authservice-java:latest --tls-verify=false
 
 if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-authservice-java.yaml` == 0 ]]
@@ -91,7 +91,7 @@ rm ${MANIFESTS}/deploy-acmeair-authservice-java.yaml.bak
 cd ../acmeair-bookingservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java .
+podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java --no-cache .
 podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java:latest --tls-verify=false
 
 if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml` == 0 ]]
@@ -122,7 +122,7 @@ rm ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml.bak
 cd ../acmeair-customerservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java .
+podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java --no-cache .
 podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java:latest --tls-verify=false
 
 if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml` == 0 ]]
@@ -151,7 +151,7 @@ rm ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml.bak
 cd ../acmeair-flightservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java .
+podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java --no-cache .
 podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java:latest --tls-verify=false
 
 if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml` == 0 ]]
