@@ -1,15 +1,12 @@
 FROM open-liberty:kernel
 
-COPY src/main/liberty/config/server.xml /config/server.xml
-COPY src/main/liberty/config/server.env /config/server.env
-COPY src/main/liberty/config/jvm.options /config/jvm.options
-COPY target/acmeair-mainservice-java-3.3.war /config/apps/
+COPY --chown=1001:0 src/main/liberty/config/server.xml /config/server.xml
+COPY --chown=1001:0 src/main/liberty/config/server.env /config/server.env
+COPY --chown=1001:0 src/main/liberty/config/jvm.options /config/jvm.options
 
-USER 0
-RUN chown 1001:0 /config/server.xml
-RUN chown 1001:0 /config/server.env
-RUN chown 1001:0 /config/jvm.options
-RUN chown 1001:0 /config/apps/acmeair-mainservice-java-3.3.war
-USER 1001
+COPY --chown=1001:0 target/acmeair-mainservice-java-3.3.war /config/apps/
 
-RUN configure.sh || if [ $? -ne 22 ]; then exit $?; fi
+ARG CREATE_OPENJ9_SCC=true
+ENV OPENJ9_SCC=${CREATE_OPENJ9_SCC}
+
+RUN configure.sh 

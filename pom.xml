@@ -114,7 +114,7 @@
                   <id>install-apps</id>
                   <configuration>
                      <looseApplication>true</looseApplication>
-                     <stripVersion>true</stripVersion>
+                     <stripVersion>false</stripVersion>
                      <installAppPackages>project</installAppPackages>
                   </configuration>
                </execution>
