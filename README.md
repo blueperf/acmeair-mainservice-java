@@ -34,21 +34,24 @@ Prereq: [Install Docker, docker-compose, and start Docker daemon on your local m
 
 ## Openshift Instructions
 This doc assumes that you are using podman
-* Openshift is installed and configured, and internal image resgitry is availebl and its default-route is exposed.
-* The podman env is logged into the openshift image repository
+* Openshift is installed and configured, and internal image resgitry is available and its default-route is exposed.
+* The docker or podman env is logged into the openshift image repository
   Example:
-  *  oc login https://api.wasocp44k.fake-link.com:6443 -u ocpadmin -p fake-password
-  *  podman login -u ocpadmin -p $(oc whoami -t) --tls-verify=false default-route-openshift-image-registry.apps.wasocp44k.fake-link.com
+  * oc login https://api.wasocp44k.fake-link.com:6443 -u ocpadmin -p fake-password
+  * docker login -u ocpadmin -p $(oc whoami -t) default-route-openshift-image-registry.apps.wasocp44k.fake-link.com
+  or
+  * podman login -u ocpadmin -p $(oc whoami -t) --tls-verify=false default-route-openshift-image-registry.apps.wasocp44k.fake-link.com
 
-1. Create new procject: oc new-project acmeair
+1. Create new project: oc new-project acmeair
 2. Determine default-route (The route you logged into above)
    * Example: default-route-openshift-image-registry.apps.wasocp44k.fake-link.com
 3. Determine internal-route.
    * Example (usually): image-registry.openshift-image-registry.svc:5000
 2. Determine host for the route. 
    * Example: acmeair.apps.wasocp44k.fake-link.com (The part after acmeair. should match other routes for you cluster) 
-3. Run ./buildAndDeployToOpenshift.sh default-route/project_name internal-route/project_name host
+3. Run ./buildAndDeployToOpenshift.sh default-route/project_name internal-route/project_name host [podman]
    * Example: ./buildAndDeployToOpenshift.sh default-route-openshift-image-registry.apps.wasocp44k.fake-link.com/acmeair image-registry.openshift-image-registry.svc:5000/acmeair acmeair.apps.wasocp44k.fake-link.com
+   Add podman as the last argument if using podman.
 
 ## Minikube Instructions
 
