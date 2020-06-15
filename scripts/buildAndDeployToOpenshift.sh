@@ -15,15 +15,26 @@
 
 MANIFESTS=manifests-openshift
 
-if [[ ${2} == "" ]]
+if [[ ${3} == "" ]]
 then
-  echo "Usage: buildAndDeployToOpenshift.sh <IMAGE_PREFIX> <ROUTE_PATH>"
+  echo "Usage: buildAndDeployToOpenshift.sh  default-route/project_name internal-route/project_name route_host [podman]"
   exit
 fi
 
 IMAGE_PREFIX_EXTERNAL=${1}
 IMAGE_PREFIX=${2}
 ROUTE_HOST=${3}
+
+if [[ ${4} == "" ]]
+then
+  echo "Using Docker to build/push"
+  BUILD_TOOL="docker"
+else
+  echo "Using podman to build/push"
+  BUILD_TOOL="podman"
+  TLS_VERIFY="--tls-verify=false"
+fi
+
 
 echo "Image Prefix External=${IMAGE_PREFIX_EXTERNAL}"
 echo "Image Prefix Internal=${IMAGE_PREFIX}"
@@ -33,8 +44,8 @@ cd "$(dirname "$0")"
 cd ..
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-mainservice-java:latest --no-cache .
-podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-mainservice-java:latest --tls-verify=false
+${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-mainservice-java:latest --no-cache .
+${BUILD_TOOL} push ${IMAGE_PREFIX_EXTERNAL}/acmeair-mainservice-java:latest ${TLS_VERIFY}
 
 if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml` == 0 ]]
 then
@@ -62,8 +73,8 @@ rm ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml.bak
 cd ../acmeair-authservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-authservice-java --no-cache .
-podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-authservice-java:latest --tls-verify=false
+${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-authservice-java --no-cache .
+${BUILD_TOOL} push ${IMAGE_PREFIX_EXTERNAL}/acmeair-authservice-java:latest ${TLS_VERIFY} 
 
 if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-authservice-java.yaml` == 0 ]]
 then
@@ -91,8 +102,8 @@ rm ${MANIFESTS}/deploy-acmeair-authservice-java.yaml.bak
 cd ../acmeair-bookingservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java --no-cache .
-podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java:latest --tls-verify=false
+${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java --no-cache .
+${BUILD_TOOL} push ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java:latest ${TLS_VERIFY} 
 
 if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml` == 0 ]]
 then
@@ -122,8 +133,8 @@ rm ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml.bak
 cd ../acmeair-customerservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java --no-cache .
-podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java:latest --tls-verify=false
+${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java --no-cache .
+${BUILD_TOOL} push ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java:latest ${TLS_VERIFY} 
 
 if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml` == 0 ]]
 then
@@ -151,8 +162,8 @@ rm ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml.bak
 cd ../acmeair-flightservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-podman build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java --no-cache .
-podman push ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java:latest --tls-verify=false
+${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java --no-cache .
+${BUILD_TOOL} push ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java:latest ${TLS_VERIFY}
 
 if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml` == 0 ]]
 then
