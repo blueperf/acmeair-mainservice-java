@@ -19,7 +19,6 @@
   
   <cors domain="/acmeair"
       allowedOrigins="*"
-      allowedMethods="GET, DELETE, POST"
       allowedMethods="OPTIONS, GET, DELETE, POST"
       allowedHeaders="*"
       allowCredentials="true"
