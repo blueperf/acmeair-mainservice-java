@@ -34,7 +34,7 @@ Prereq: [Install Docker, docker-compose, and start Docker daemon on your local m
 
 ## Openshift Instructions
 This doc assumes that you are using podman
-* Openshift is installed and configured, and internal image resgitry is available and its default-route is exposed.
+* Openshift is installed and configured, and internal image registry is available and its default-route is exposed.
 * The docker or podman env is logged into the openshift image repository
   Example:
   * oc login https://api.wasocp44k.fake-link.com:6443 -u ocpadmin -p fake-password
