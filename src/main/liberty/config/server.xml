@@ -16,4 +16,12 @@
     <!-- enable visibility to third party apis -->
     <classloader apiTypeVisibility="api,ibm-api,spec,stable,third-party"/>
   </webApplication>
+  
+  <cors domain="/acmeair"
+      allowedOrigins="*"
+      allowedMethods="OPTIONS, GET, DELETE, POST"
+      allowedHeaders="*"
+      allowCredentials="true"
+      maxAge="3600" />
+  
 </server>
