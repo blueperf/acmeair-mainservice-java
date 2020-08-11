@@ -45,6 +45,7 @@ acmeair-authservice-java:
   build: ../acmeair-authservice-java/
   environment:
     - LICENSE=accept
+    - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
   mem_limit: 512m
 
 acmeair-bookingservice-java:
@@ -55,6 +56,9 @@ acmeair-bookingservice-java:
   environment:
     - LICENSE=accept
     - MONGO_HOST=acmeair-booking-db
+    - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
+    - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
+    - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
   volumes_from:
     - acmeair-booking-db
   mem_limit: 512m
@@ -67,6 +71,7 @@ acmeair-customerservice-java:
   environment:
     - LICENSE=accept
     - MONGO_HOST=acmeair-customer-db
+    - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
   volumes_from:
     - acmeair-customer-db
   mem_limit: 512m
