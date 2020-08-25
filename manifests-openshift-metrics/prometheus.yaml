@@ -1,0 +1,60 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: example
+  labels:
+    prometheus: k8s
+  namespace: __NAMESPACE__
+spec:
+  replicas: 2
+  serviceAccountName: prometheus-k8s
+  securityContext: {}
+  serviceMonitorSelector:
+    matchExpressions:
+      - key: k8s-app
+        operator: Exists
+  ruleSelector: {}
+  alerting:
+    alertmanagers:
+      - namespace: monitoring
+        name: alertmanager-main
+        port: web
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: acmeair-servicemonitor
+  labels:
+    k8s-app: prometheus
+  namespace: __NAMESPACE__
+spec:
+  endpoints:
+    - basicAuth:
+        password:
+          key: password
+          name: basic-auth
+        username:
+          key: username
+          name: basic-auth
+      interval: 5s
+      path: /metrics
+      port: 9443-tcp
+      scheme: https
+      targetPort: 9443
+      tlsConfig:
+        insecureSkipVerify: true
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      team: backend
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: basic-auth
+  namespace: __NAMESPACE__
+type: Opaque
+stringData:
+  username: admin
+  password: password
