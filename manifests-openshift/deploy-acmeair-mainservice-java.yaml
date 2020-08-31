@@ -34,6 +34,8 @@ spec:
           value: '6832'
         - name: JAEGER_ENDPOINT
           value: 'http://jaeger-all-in-one-inmemory-collector:14268/api/traces'
+        - name: ACCESS_LOGGING_ENABLED
+          value: 'false'
 ---
 apiVersion: v1
 kind: Service
