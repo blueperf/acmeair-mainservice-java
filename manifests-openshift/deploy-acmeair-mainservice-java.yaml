@@ -28,6 +28,12 @@ spec:
           value: admin
         - name: PASSWORD
           value: password
+        - name: JAEGER_AGENT_HOST
+          value: jaeger-all-in-one-inmemory-agent
+        - name: JAEGER_AGENT_PORT
+          value: '6832'
+        - name: JAEGER_ENDPOINT
+          value: 'http://jaeger-all-in-one-inmemory-collector:14268/api/traces'
 ---
 apiVersion: v1
 kind: Service
@@ -35,6 +41,22 @@ metadata:
   name: acmeair-main-service
 spec:
   ports:
-    - port: 9080
+    - name: 9080-tcp
+      protocol: TCP
+      port: 9080
+      targetPort: 9080
+  selector:
+    name: acmeair-main-deployment
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: acmeair-secure-main-service
+spec:
+  ports:
+    - name: 9443-tcp
+      protocol: TCP
+      port: 9443
+      targetPort: 9443
   selector:
     name: acmeair-main-deployment

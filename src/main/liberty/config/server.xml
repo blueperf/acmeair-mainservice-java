@@ -6,11 +6,16 @@
   </featureManager>
 
   <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
-  <httpEndpoint id="defaultHttpEndpoint" host="*"
-                httpPort="9080" httpsPort="9443">
+  <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443">
+    <accessLogging
+      filepath="${server.output.dir}/logs/http_defaultEndpoint_access.log"
+      logFormat='%h %u %t "%r" %s %b %D %{User-agent}i'>
+    </accessLogging>
   </httpEndpoint>
 
   <quickStartSecurity userName="${env.USERNAME}" userPassword="${env.PASSWORD}" />
+
+  <logging consoleFormat="json" consoleSource="message,trace,accessLog,ffdc,audit" messageFormat="json" messageSource="message,trace,accessLog,ffdc,audit" traceSpecification="com.acmeair*=all" />
 
   <webApplication name="acmeair-mainservice" location="acmeair-mainservice-java-3.3.war" contextRoot="/acmeair">
     <!-- enable visibility to third party apis -->

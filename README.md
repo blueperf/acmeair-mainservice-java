@@ -53,6 +53,25 @@ This doc assumes that you are using podman
    * Example: ./buildAndDeployToOpenshift.sh default-route-openshift-image-registry.apps.wasocp44k.fake-link.com/acmeair image-registry.openshift-image-registry.svc:5000/acmeair acmeair.apps.wasocp44k.fake-link.com
    Add podman as the last argument if using podman.
 
+### Addon: Openshift Application Metrics (Optional)
+1. Create new project: oc new-project app-metrics
+2. On the Openshift console under "Operators", click "Operator Hub" and install the following operators to your individual project.
+    * Install "Grafana Operator"
+    * Install "Prometheus Operator"
+3. Run ./setupOpenshiftMetrics.sh project_name app_metrics_project_name
+    * Example: ./setupOpenshiftMetrics.sh acmeair app-metrics
+4. Visit the Grafana URL in the "Networking" > "Routes" section and click to open the pre-loaded dashboard.
+
+### Addon: Openshift Application Tracing (Optional)
+1. On the Openshift console, navigate to your acmeair project
+2. The following environment variables are already setup in each acmeair deployment for your ease of use.
+    * JAEGER_AGENT_HOST - jaeger-all-in-one-inmemory-agent
+    * JAEGER_AGENT_PORT - 6832
+    * JAEGER_ENDPOINT - http://jaeger-all-in-one-inmemory-collector:14268/api/traces
+3. Under "Operators", click "Operator Hub" and install the "Community Jaeger Operator" to your individual project.
+4. Click "Installed Operators" and for the newly installed operator create a new Jaeger instance.
+5. Visit the Jaeger URL in the "Networking" > "Routes" section and load test the application to see some traces.
+
 ## Minikube Instructions
 
 * Prereq: [Install Docker, docker-compose, and start Docker daemon on your local machine](https://docs.docker.com/installation/)
