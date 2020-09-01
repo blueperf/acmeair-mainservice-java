@@ -68,9 +68,16 @@ This doc assumes that you are using podman
     * JAEGER_AGENT_HOST - jaeger-all-in-one-inmemory-agent
     * JAEGER_AGENT_PORT - 6832
     * JAEGER_ENDPOINT - http://jaeger-all-in-one-inmemory-collector:14268/api/traces
-3. Under "Operators", click "Operator Hub" and install the "Community Jaeger Operator" to your individual project.
-4. Click "Installed Operators" and for the newly installed operator create a new Jaeger instance.
-5. Visit the Jaeger URL in the "Networking" > "Routes" section and load test the application to see some traces.
+3. To get more data, you can optionally enable access logs and tracing for each service by updating the following env variables.
+```
+    - name: ACCESS_LOGGING_ENABLED
+      value: 'true'
+    - name: TRACE_SPEC
+      value: 'com.acmeair*=all'
+```
+4. Under "Operators", click "Operator Hub" and install the "Community Jaeger Operator" to your individual project.
+5. Click "Installed Operators" and for the newly installed operator create a new Jaeger instance.
+6. Visit the Jaeger URL in the "Networking" > "Routes" section and load test the application to see some traces.
 
 ## Minikube Instructions
 
