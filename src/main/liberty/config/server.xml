@@ -16,7 +16,7 @@
 
   <quickStartSecurity userName="${env.USERNAME}" userPassword="${env.PASSWORD}" />
 
-  <logging consoleFormat="json" consoleSource="message,trace,accessLog,ffdc,audit" messageFormat="json" messageSource="message,trace,accessLog,ffdc,audit" traceSpecification="com.acmeair*=all" />
+  <logging consoleFormat="json" consoleSource="message,trace,accessLog,ffdc,audit" messageFormat="json" messageSource="message,trace,accessLog,ffdc,audit" traceSpecification="${env.TRACE_SPEC}" />
 
   <webApplication name="acmeair-mainservice" location="acmeair-mainservice-java-3.3.war" contextRoot="/acmeair">
     <!-- enable visibility to third party apis -->
