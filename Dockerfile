@@ -8,5 +8,7 @@ COPY --chown=1001:0 target/acmeair-mainservice-java-4.0.war /config/apps/
 
 ARG CREATE_OPENJ9_SCC=true
 ENV OPENJ9_SCC=${CREATE_OPENJ9_SCC}
+ENV ACCESS_LOGGING_ENABLED=false
+ENV TRACE_SPEC=*=info
 
 RUN configure.sh 
