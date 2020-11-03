@@ -83,7 +83,7 @@ function logout() {
 	}
 	
 	dojo.cookie("loggedinuser", null, {expires: -1, path: '/'});
-	dojo.cookie("jwt_token", null, {expires: -1, path: '/'});
+	dojo.cookie("Bearer", null, {expires: -1, path: '/'});
 	updateLoggedInUserWelcome();
 }
 
