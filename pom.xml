@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
-   <parent>
-      <groupId>net.wasdev.wlp.maven.parent</groupId>
-      <artifactId>liberty-maven-app-parent</artifactId>
-      <version>RELEASE</version>
-   </parent>
    <groupId>acmeair-mainservice-java</groupId>
    <version>4.0</version>
    <artifactId>acmeair-mainservice-java</artifactId>
@@ -25,47 +20,26 @@
       <testServerHttpPort>9080</testServerHttpPort>
       <testServerHttpsPort>9443</testServerHttpsPort>
       <!-- end::appdetails[] -->
-      <warContext>${app.name}</warContext>
-      <package.file>${project.build.directory}/${app.name}.zip</package.file>
-      <packaging.type>usr</packaging.type>
    </properties>
-   <profiles>
-      <!-- mvn.cmd for windows systems -->
-      <profile>
-         <id>windowsExtension</id>
-         <activation>
-            <os>
-               <family>Windows</family>
-            </os>
-         </activation>
-         <properties>
-            <mvn.extension>.cmd</mvn.extension>
-         </properties>
-      </profile>
-      <!-- just mvn for other systems -->
-      <profile>
-         <id>nonWindowsExtension</id>
-         <activation>
-            <os>
-               <family>!Windows</family>
-            </os>
-         </activation>
-         <properties>
-            <mvn.extension />
-         </properties>
-      </profile>
-   </profiles>
    <build>
       <plugins>
+         <!-- Enable liberty-maven plugin -->
          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-            <version>${version.maven-war-plugin}</version>
-            <configuration>
-               <failOnMissingWebXml>false</failOnMissingWebXml>
-               <!--<warName>${project.artifactId}</warName>-->
-               <packagingExcludes>pom.xml</packagingExcludes>
-            </configuration>
+                <groupId>io.openliberty.tools</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
+                <version>3.3-M4</version>
+                <configuration>
+                    <configDirectory>src/main/liberty/config</configDirectory>
+                    <bootstrapProperties>
+                        <default.http.port>${testServerHttpPort}</default.http.port>
+                        <default.https.port>${testServerHttpsPort}</default.https.port>
+                        <ACCESS_LOGGING_ENABLED>false</ACCESS_LOGGING_ENABLED>
+                        <app.context.root>${warContext}</app.context.root>
+                    </bootstrapProperties>
+                    <install>
+                      <runtimeUrl>https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/nightly/2020-11-02_1100/openliberty-all-20.0.0.12-cl201220201102-1100.zip</runtimeUrl>
+                    </install>
+                </configuration>
          </plugin>
          <!-- Plugin to run unit tests -->
          <plugin>
@@ -81,53 +55,6 @@
                         <exclude>**/it/**</exclude>
                      </excludes>
                      <reportsDirectory>${project.build.directory}/test-reports/unit</reportsDirectory>
-                  </configuration>
-               </execution>
-            </executions>
-         </plugin>
-         <!-- Enable liberty-maven plugin -->
-         <plugin>
-            <groupId>net.wasdev.wlp.maven.plugins</groupId>
-            <artifactId>liberty-maven-plugin</artifactId>
-            <configuration>
-               <assemblyArtifact>
-                  <groupId>io.openliberty</groupId>
-                  <artifactId>openliberty-runtime</artifactId>
-                  <version>RELEASE</version>
-                  <type>zip</type>
-               </assemblyArtifact>
-               <configFile>src/main/liberty/config/server.xml</configFile>
-               <serverEnvFile>src/main/liberty/config/server.env</serverEnvFile>
-               <jvmOptionsFile>src/main/liberty/config/jvm.options</jvmOptionsFile>
-               <packageFile>${package.file}</packageFile>
-               <include>${packaging.type}</include>
-               <!-- tag::bootstrap[] -->
-               <bootstrapProperties>
-                  <default.http.port>${testServerHttpPort}</default.http.port>
-                  <default.https.port>${testServerHttpsPort}</default.https.port>
-                  <app.context.root>${warContext}</app.context.root>
-               </bootstrapProperties>
-               <!-- end::bootstrap[] -->
-            </configuration>
-            <executions>
-               <execution>
-                  <id>install-apps</id>
-                  <configuration>
-                     <looseApplication>true</looseApplication>
-                     <stripVersion>false</stripVersion>
-                     <installAppPackages>project</installAppPackages>
-                  </configuration>
-               </execution>
-               <execution>
-                  <id>install-feature</id>
-                  <configuration>
-                     <skip>true</skip>
-                  </configuration>
-               </execution>
-               <execution>
-                  <id>package-app</id>
-                  <configuration>
-                     <outputDirectory>target/wlp-package</outputDirectory>
                   </configuration>
                </execution>
             </executions>
@@ -171,17 +98,6 @@
          </plugin>
       </plugins>
    </build>
-   <dependencyManagement>
-      <dependencies>
-         <dependency>
-            <groupId>io.openliberty.features</groupId>
-            <artifactId>features-bom</artifactId>
-            <version>RELEASE</version>
-            <type>pom</type>
-            <scope>import</scope>
-         </dependency>
-      </dependencies>
-   </dependencyManagement>
    <dependencies>
      <dependency>
        <groupId>org.eclipse.microprofile</groupId>

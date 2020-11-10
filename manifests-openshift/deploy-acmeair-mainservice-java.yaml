@@ -38,6 +38,8 @@ spec:
           value: 'false'
         - name: TRACE_SPEC
           value: '*=info'
+        - name: LOGGING_FORMAT
+          value: 'simple'
 ---
 apiVersion: v1
 kind: Service
