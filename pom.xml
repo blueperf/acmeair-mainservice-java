@@ -37,7 +37,7 @@
                         <app.context.root>${warContext}</app.context.root>
                     </bootstrapProperties>
                     <install>
-                      <runtimeUrl>https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/nightly/2020-11-02_1100/openliberty-all-20.0.0.12-cl201220201102-1100.zip</runtimeUrl>
+                      <runtimeUrl>https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/nightly/2020-11-10_1100/openliberty-all-20.0.0.12-cl201220201110-1100.zip</runtimeUrl>
                     </install>
                 </configuration>
          </plugin>
