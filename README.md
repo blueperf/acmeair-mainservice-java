@@ -68,16 +68,21 @@ This doc assumes that you are using podman
     * JAEGER_AGENT_HOST - jaeger-all-in-one-inmemory-agent
     * JAEGER_AGENT_PORT - 6832
     * JAEGER_ENDPOINT - http://jaeger-all-in-one-inmemory-collector:14268/api/traces
-3. To get more data, you can optionally enable access logs and tracing for each service by updating the following env variables.
+3. Under "Operators", click "Operator Hub" and install the "Community Jaeger Operator" to your individual project.
+4. Click "Installed Operators" and for the newly installed operator create a new Jaeger instance.
+5. Visit the Jaeger URL in the "Networking" > "Routes" section and load test the application to see some traces.
+
+## Logging/Tracing Options: 
+
+To get more data, you can optionally enable access logs and tracing or switch the logging format to json for each service by updating the following env variables.
 ```
+    - name: LOGGING_FORMAT
+      value: 'json'
     - name: ACCESS_LOGGING_ENABLED
       value: 'true'
     - name: TRACE_SPEC
       value: 'com.acmeair*=all'
 ```
-4. Under "Operators", click "Operator Hub" and install the "Community Jaeger Operator" to your individual project.
-5. Click "Installed Operators" and for the newly installed operator create a new Jaeger instance.
-6. Visit the Jaeger URL in the "Networking" > "Routes" section and load test the application to see some traces.
 
 ## Minikube Instructions
 
@@ -92,34 +97,6 @@ This doc assumes that you are using podman
   ./buildAndDeployToMinikube.sh
 6. Wait a couple minutes and go to http://kubernetes_ip/acmeair
 7. Go to the Configuration Page and Load the Database
-
-## IBM Cloud Private Instructions
-This doc assumes that
-* ICP is installed and configured
-* The docker env is logged into the ICP docker repo
-  * docker login mycluster.icp:8500
-
-* kubectl and helm are attached the ICP cluster
-
-* You are running ICP as admin
-
-* maven is installed and set up to build with a full SDK.
-
-1. Build and push the apps
-   * `cd acmeair-mainservice-java/scripts`
-   * `./buildAndPushtoICP.sh`
-2. Deploy to ICP using one of the following options: 
-   * Using ibm-websphere-liberty helm chart
-      * `./deployChartToICP.sh`
-   * Using loose deployment manifests
-     * `./deployToICP.sh`
-3. Wait a couple minutes and go to http://proxy_ip/acmeair
-4. Go to the Configuration Page and Load the Database
-5. Cleanup
-   * Helm chart
-      * `./deleteChartRelease.sh`
-   * Loose deployment manifests
-      * `./deleteKubeObjects.sh`
 
 ## Istio Instructions
 
