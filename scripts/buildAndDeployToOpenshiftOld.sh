@@ -15,10 +15,17 @@
 
 MANIFESTS=manifests-openshift
 
-EXTERNAL_REGISTRY=$(oc registry info)
-PROJECT_NAME=$(oc project -q)
+if [[ ${3} == "" ]]
+then
+  echo "Usage: buildAndDeployToOpenshift.sh  default-route/project_name internal-route/project_name route_host [podman]"
+  exit
+fi
 
-if [[ ${1} == "" ]]
+IMAGE_PREFIX_EXTERNAL=${1}
+IMAGE_PREFIX=${2}
+ROUTE_HOST=${3}
+
+if [[ ${4} == "" ]]
 then
   echo "Using Docker to build/push"
   BUILD_TOOL="docker"
@@ -28,11 +35,6 @@ else
   TLS_VERIFY="--tls-verify=false"
 fi
 
-${BUILD_TOOL} login -u $(oc whoami) -p $(oc whoami -t) ${TLS_VERIFY}  ${EXTERNAL_REGISTRY}
-
-IMAGE_PREFIX_EXTERNAL=${EXTERNAL_REGISTRY}/${PROJECT_NAME}
-IMAGE_PREFIX=image-registry.openshift-image-registry.svc:5000/${PROJECT_NAME}
-ROUTE_HOST=acmeair$(oc registry info | awk '{gsub("default-route-openshift-image-registry","");print $1}')
 
 echo "Image Prefix External=${IMAGE_PREFIX_EXTERNAL}"
 echo "Image Prefix Internal=${IMAGE_PREFIX}"
@@ -100,7 +102,7 @@ rm ${MANIFESTS}/deploy-acmeair-authservice-java.yaml.bak
 cd ../acmeair-bookingservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java --no-cache -f Dockerfile-daily .
+${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java --no-cache  -f Dockerfile-daily .
 ${BUILD_TOOL} push ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java:latest ${TLS_VERIFY} 
 
 if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml` == 0 ]]
