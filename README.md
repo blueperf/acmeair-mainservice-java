@@ -29,8 +29,13 @@ Prereq: [Install Docker, docker-compose, and start Docker daemon on your local m
     * docker-compose --pull build
     * NETWORK=my-net docker-compose up
 
-4. Go to http://docker_machine_ip/main/acmeair
-5. Go to the Configuration Page and Load the Database
+4. Go to http://docker_machine_ip/acmeair
+5. Go to the Configuration Page and Load the Database or do the following:
+    ```
+    curl http://docker_machine_ip/booking/loader/load
+    curl http://docker_machine_ip/flight/loader/load
+    curl http://docker_machine_ip/customer/loader/load?numCustomers=10000
+    ```
 
 ## Openshift Instructions
 This doc assumes Openshift is installed and configured, and internal image registry is available and its default-route is exposed.
@@ -56,6 +61,12 @@ This doc assumes Openshift is installed and configured, and internal image regis
    ./buildAndDeployToOpenshift.sh podman
    ```
 4. Go to http://acmeair.apps.your.clusterhost.com/acmeair
+5. Go to the Configuration Page and Load the Database or do the following:
+    ```
+    curl http://acmeair.apps.your.clusterhost.com/booking/loader/load
+    curl http://acmeair.apps.your.clusterhost.com/flight/loader/load
+    curl http://acmeair.apps.your.clusterhost.com/customer/loader/load?numCustomers=10000
+    ```
 
 ### Addon: Openshift Application Metrics (Optional)
 1. Create new project: oc new-project app-metrics
