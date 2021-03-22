@@ -36,9 +36,6 @@
             <ACCESS_LOGGING_ENABLED>false</ACCESS_LOGGING_ENABLED>
             <app.context.root>${warContext}</app.context.root>
           </bootstrapProperties>
-          <!--<install>
-            <runtimeUrl>https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/nightly/2020-11-10_1100/openliberty-all-20.0.0.12-cl201220201110-1100.zip</runtimeUrl>
-          </install>-->
         </configuration>
       </plugin>
       <!-- Plugin to run unit tests -->
@@ -104,87 +101,7 @@
       <artifactId>microprofile</artifactId>
       <scope>provided</scope>
       <type>pom</type>
-      <version>4.0-M1</version>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.ws.rs</groupId>
-      <artifactId>jakarta.ws.rs-api</artifactId>
-      <scope>provided</scope>
-      <version>2.1.6</version>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.annotation</groupId>
-      <artifactId>jakarta.annotation-api</artifactId>
-      <version>1.3.5</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.enterprise</groupId>
-      <artifactId>jakarta.enterprise.cdi-api</artifactId>
-      <version>2.0.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.json</groupId>
-      <artifactId>jakarta.json-api</artifactId>
-      <version>1.1.6</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.json.bind</groupId>
-      <artifactId>jakarta.json.bind-api</artifactId>
-      <version>1.0.2</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- mp 4.0 -->
-    <dependency>
-      <groupId>org.eclipse.microprofile.config</groupId>
-      <artifactId>microprofile-config-api</artifactId>
-      <version>2.0-M1</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.microprofile.fault-tolerance</groupId>
-      <artifactId>microprofile-fault-tolerance-api</artifactId>
-      <version>3.0-RC2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.microprofile.health</groupId>
-      <artifactId>microprofile-health-api</artifactId>
-      <version>3.0-RC3</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.microprofile.jwt</groupId>
-      <artifactId>microprofile-jwt-auth-api</artifactId>
-      <version>1.2-RC1</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.microprofile.metrics</groupId>
-      <artifactId>microprofile-metrics-api</artifactId>
-      <version>3.0-RC1</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.microprofile.openapi</groupId>
-      <artifactId>microprofile-openapi-api</artifactId>
-      <version>2.0-RC2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.microprofile.opentracing</groupId>
-      <artifactId>microprofile-opentracing-api</artifactId>
-      <version>2.0-RC2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.microprofile.rest.client</groupId>
-      <artifactId>microprofile-rest-client-api</artifactId>
-      <version>2.0-RC2</version>
-      <scope>provided</scope>
+      <version>4.0.1</version>
     </dependency>
     <dependency>
       <groupId>io.jaegertracing</groupId>
@@ -196,6 +113,7 @@
       <artifactId>slf4j-jdk14</artifactId>
       <version>1.7.25</version>
     </dependency>
+
     <!-- For tests -->
     <dependency>
       <groupId>junit</groupId>
