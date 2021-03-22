@@ -44,7 +44,7 @@ cd "$(dirname "$0")"
 cd ..
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-mainservice-java:latest --no-cache -f Dockerfile-daily .
+${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-mainservice-java:latest --no-cache -f Dockerfile .
 ${BUILD_TOOL} push ${IMAGE_PREFIX_EXTERNAL}/acmeair-mainservice-java:latest ${TLS_VERIFY}
 
 if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml` == 0 ]]
@@ -73,7 +73,7 @@ rm ${MANIFESTS}/deploy-acmeair-mainservice-java.yaml.bak
 cd ../acmeair-authservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-authservice-java --no-cache -f Dockerfile-daily .
+${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-authservice-java --no-cache -f Dockerfile .
 ${BUILD_TOOL} push ${IMAGE_PREFIX_EXTERNAL}/acmeair-authservice-java:latest ${TLS_VERIFY} 
 
 if [[ `grep -c ${IMAGE_PREFIX} ${MANIFESTS}/deploy-acmeair-authservice-java.yaml` == 0 ]]
@@ -102,7 +102,7 @@ rm ${MANIFESTS}/deploy-acmeair-authservice-java.yaml.bak
 cd ../acmeair-bookingservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java --no-cache  -f Dockerfile-daily .
+${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java --no-cache  -f Dockerfile .
 ${BUILD_TOOL} push ${IMAGE_PREFIX_EXTERNAL}/acmeair-bookingservice-java:latest ${TLS_VERIFY} 
 
 if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml` == 0 ]]
@@ -133,7 +133,7 @@ rm ${MANIFESTS}/deploy-acmeair-bookingservice-java.yaml.bak
 cd ../acmeair-customerservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java --no-cache -f Dockerfile-daily .
+${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java --no-cache -f Dockerfile .
 ${BUILD_TOOL} push ${IMAGE_PREFIX_EXTERNAL}/acmeair-customerservice-java:latest ${TLS_VERIFY} 
 
 if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml` == 0 ]]
@@ -162,7 +162,7 @@ rm ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml.bak
 cd ../acmeair-flightservice-java
 kubectl delete -f ${MANIFESTS}
 mvn clean package
-${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java --no-cache -f Dockerfile-daily .
+${BUILD_TOOL} build --pull -t ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java --no-cache -f Dockerfile .
 ${BUILD_TOOL} push ${IMAGE_PREFIX_EXTERNAL}/acmeair-flightservice-java:latest ${TLS_VERIFY}
 
 if [[ `grep -c ${IMAGE_PREFIX}/a ${MANIFESTS}/deploy-acmeair-flightservice-java.yaml` == 0 ]]

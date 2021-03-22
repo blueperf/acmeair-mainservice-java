@@ -14,7 +14,7 @@
 # limitations under the License.
 
 MANIFESTS=manifests-openshift
-DOCKERFILE=Dockerfile-daily
+DOCKERFILE=Dockerfile
 
 EXTERNAL_REGISTRY=$(oc registry info)
 PROJECT_NAME=$(oc project -q)
