@@ -6,7 +6,7 @@ COPY --chown=1001:0 src/main/liberty/config/server.env /config/server.env
 COPY --chown=1001:0 src/main/liberty/config/jvm.options /config/jvm.options
 
 # App
-COPY --chown=1001:0 target/acmeair-mainservice-java-4.0.war /config/apps/
+COPY --chown=1001:0 target/acmeair-mainservice-java-4.1.war /config/apps/
 
 # Logging vars
 ENV LOGGING_FORMAT=simple
