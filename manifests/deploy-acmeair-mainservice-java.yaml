@@ -22,7 +22,7 @@ spec:
         ports:
         - containerPort: 9080
         - containerPort: 9443
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         env:
         - name: USERNAME
           value: admin
