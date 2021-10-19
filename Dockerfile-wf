@@ -13,7 +13,7 @@ COPY target/acmeair-mainservice-java-4.1.war /opt/jboss/wildfly/standalone/deplo
 RUN sed -i 's/<level name="INFO"/<level name="WARN"/' /opt/jboss/wildfly/standalone/configuration/standalone-microprofile.xml
 
 USER 0
-RUN chown jboss:0 /opt/jboss/wildfly/standalone/deployments/acmeair-mainservice-java-4.1.war
+RUN chown jboss:0 /opt/jboss/wildfly/standalone/deployments/acmeair-mainservice-java-5.0.war
 USER jboss
 
 ENV KEYSTORE_LOCATION=/opt/boss/wildfly/key.p12
