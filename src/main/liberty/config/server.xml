@@ -17,6 +17,8 @@
       logFormat='%h %u %t "%r" %s %b %D %{User-agent}i'>
     </accessLogging>
   </httpEndpoint>
+  
+  <monitor  filter="REST"/>
 
   <quickStartSecurity userName="${env.USERNAME}" userPassword="${env.PASSWORD}" />
 
