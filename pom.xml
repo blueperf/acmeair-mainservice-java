@@ -23,6 +23,12 @@
   </properties>
   <build>
     <plugins>
+      <!-- Use a later version than the default that doesn't use log4j -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+      </plugin>
       <!-- Enable liberty-maven plugin -->
       <plugin>
         <groupId>io.openliberty.tools</groupId>
