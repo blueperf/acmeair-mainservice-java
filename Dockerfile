@@ -2,11 +2,10 @@ FROM open-liberty:full
 
 # Config
 COPY --chown=1001:0 src/main/liberty/config/server.xml /config/server.xml
-COPY --chown=1001:0 src/main/liberty/config/server.env /config/server.env
 COPY --chown=1001:0 src/main/liberty/config/jvm.options /config/jvm.options
 
 # App
-COPY --chown=1001:0 target/acmeair-mainservice-java-5.0.war /config/apps/
+COPY --chown=1001:0 target/acmeair-mainservice-java-6.0.war /config/apps/
 
 # Logging vars
 ENV LOGGING_FORMAT=simple
