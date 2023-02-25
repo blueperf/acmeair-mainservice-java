@@ -1,4 +1,8 @@
-FROM open-liberty:full
+FROM icr.io/appcafe/open-liberty:full-java11-openj9-ubi
+
+USER 0
+RUN yum -y update
+RUN yum -y install net-tools
 
 # Config
 COPY --chown=1001:0 src/main/liberty/config/server.xml /config/server.xml
