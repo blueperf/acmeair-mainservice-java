@@ -53,6 +53,7 @@ acmeair-authservice-java:
   environment:
     - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
     - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    - OTEL_SERVICE_NAME=authservice
   mem_limit: 512m
 
 acmeair-bookingservice-java:
@@ -66,6 +67,7 @@ acmeair-bookingservice-java:
     - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
     - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
     - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    - OTEL_SERVICE_NAME=bookingservice
   volumes_from:
     - acmeair-booking-db
   mem_limit: 512m
@@ -79,6 +81,7 @@ acmeair-customerservice-java:
     - MONGO_HOST=acmeair-customer-db
     - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
     - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    - OTEL_SERVICE_NAME=customerservice
   volumes_from:
     - acmeair-customer-db
   mem_limit: 512m
@@ -91,6 +94,7 @@ acmeair-flightservice-java:
   environment:
     - MONGO_HOST=acmeair-flight-db
     - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    - OTEL_SERVICE_NAME=flightservice
   volumes_from:
     - acmeair-flight-db
   mem_limit: 512m

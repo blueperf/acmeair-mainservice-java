@@ -1,0 +1,132 @@
+version: "3.9"
+
+networks:
+  my-net:
+    name: my-net
+
+services:
+  jaeger:
+    container_name: jaeger
+    image: jaegertracing/all-in-one
+    networks:
+      - my-net
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "16686:16686"
+
+  acmeair-booking-db:
+    container_name: acmeair-booking-db
+    image: mongo
+    networks: 
+      - my-net
+
+  acmeair-customer-db:
+    container_name: acmeair-customer-db
+    image: mongo
+    networks: 
+      - my-net
+
+  acmeair-flight-db:
+    container_name: acmeair-flight-db
+    image: mongo
+    networks: 
+      - my-net
+
+  acmeair-nginx1:
+    container_name: acmeair-nginx1
+    networks: 
+      - my-net
+    restart: always
+    build: ./nginx/
+    ports:
+      - "80:80"
+    volumes:
+      - /www/public
+    volumes_from:
+      - acmeair-mainservice-java
+      - acmeair-authservice-java
+      - acmeair-bookingservice-java
+      - acmeair-customerservice-java
+      - acmeair-flightservice-java
+
+  acmeair-mainservice-java:
+    container_name: acmeair-mainservice-java
+    networks: 
+      - my-net
+    build: 
+      context: ../acmeair-mainservice-java/
+      dockerfile: Dockerfile-daily
+    environment:
+      - LICENSE=accept
+    mem_limit: 512m
+
+  acmeair-authservice-java:
+    container_name: acmeair-authservice-java
+    networks: 
+      - my-net
+    build:
+      context: ../acmeair-authservice-java/
+      dockerfile: Dockerfile-daily
+    environment:
+      - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+      - OTEL_SERVICE_NAME=authservice
+    mem_limit: 512m
+
+  acmeair-bookingservice-java:
+    container_name: acmeair-bookingservice-java
+    networks: 
+      - my-net
+    build:
+      context: ../acmeair-bookingservice-java/
+      dockerfile: Dockerfile-daily
+    environment:
+      - MONGO_HOST=acmeair-booking-db
+      - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
+      - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
+      - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+      - OTEL_SERVICE_NAME=bookingservice
+    volumes_from:
+      - acmeair-booking-db
+    mem_limit: 512m
+
+  acmeair-customerservice-java:
+    container_name: acmeair-customerservice-java
+    networks: 
+      - my-net
+    build:
+      context: ../acmeair-customerservice-java/
+      dockerfile: Dockerfile-daily
+    environment:
+      - MONGO_HOST=acmeair-customer-db
+      - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+      - OTEL_SERVICE_NAME=customerservice
+    volumes_from:
+      - acmeair-customer-db
+    mem_limit: 512m
+
+  acmeair-flightservice-java:
+    container_name: acmeair-flightservice-java
+    networks: 
+      - my-net
+    build:
+      context: ../acmeair-flightservice-java/
+      dockerfile: Dockerfile-daily
+    environment:
+      - MONGO_HOST=acmeair-flight-db
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+      - OTEL_SERVICE_NAME=flightservice
+    volumes_from:
+      - acmeair-flight-db
+    mem_limit: 512m
+
+
+
+
+
+
+
+
