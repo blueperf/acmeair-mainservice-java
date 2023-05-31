@@ -1,0 +1,6 @@
+FROM payara/micro
+
+COPY target/acmeair-mainservice-java-6.0.war ${DEPLOY_DIR}/
+
+ENTRYPOINT ["java","-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=90.0", "-jar", "payara-micro.jar","--contextroot", "/acmeair","--port","9080"]
+CMD ["--deploymentDir", "/opt/payara/deployments"]

@@ -50,6 +50,9 @@
 		    	dojo.xhrGet({
 					url: window.location.protocol+ '//' + window.location.host + "/booking/byuser/" + dojo.cookie("loggedinuser"),
 					handleAs: "json",
+				        headers: {
+	                                  "Authorization" : "Bearer " + dojo.cookie("Bearer")
+	                                },
 					load: function(response, ioArgs) {
 						var theData = { items : response };
 						var newStore = new dojo.data.ItemFileWriteStore({

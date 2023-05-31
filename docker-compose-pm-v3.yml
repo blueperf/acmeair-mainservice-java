@@ -46,7 +46,7 @@ services:
       - my-net
     build: 
       context: ../acmeair-mainservice-java/
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-pm
     environment:
       - LICENSE=accept
     mem_limit: 512m
@@ -57,7 +57,7 @@ services:
       - my-net
     build:
       context: ../acmeair-authservice-java/
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-pm
     environment:
       - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
     mem_limit: 512m
@@ -68,7 +68,7 @@ services:
       - my-net
     build:
       context: ../acmeair-bookingservice-java/
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-pm
     environment:
       - MONGO_HOST=acmeair-booking-db
       - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
@@ -84,7 +84,7 @@ services:
       - my-net
     build:
       context: ../acmeair-customerservice-java/
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-pm
     environment:
       - MONGO_HOST=acmeair-customer-db
       - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
@@ -98,7 +98,7 @@ services:
       - my-net
     build:
       context: ../acmeair-flightservice-java/
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-pm
     environment:
       - MONGO_HOST=acmeair-flight-db
     volumes_from:
