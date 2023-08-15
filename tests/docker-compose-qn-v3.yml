@@ -46,7 +46,7 @@ services:
       - my-net
     build: 
       context: ../acmeair-mainservice-java/
-      dockerfile: Dockerfile-pm
+      dockerfile: Dockerfile
     environment:
       - LICENSE=accept
     mem_limit: 1g
@@ -57,7 +57,7 @@ services:
       - my-net
     build:
       context: ../acmeair-authservice-java/
-      dockerfile: Dockerfile-pm
+      dockerfile: Dockerfile-qn
     environment:
       - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
     mem_limit: 1g
@@ -68,9 +68,9 @@ services:
       - my-net
     build:
       context: ../acmeair-bookingservice-java/
-      dockerfile: Dockerfile-pm
+      dockerfile: Dockerfile-qn
     environment:
-      - MONGO_HOST=acmeair-booking-db
+      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://acmeair-booking-db:27017
       - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
       - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
       - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
@@ -84,9 +84,9 @@ services:
       - my-net
     build:
       context: ../acmeair-customerservice-java/
-      dockerfile: Dockerfile-pm
+      dockerfile: Dockerfile-qn
     environment:
-      - MONGO_HOST=acmeair-customer-db
+      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://acmeair-customer-db:27017
       - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
     volumes_from:
       - acmeair-customer-db
@@ -98,9 +98,9 @@ services:
       - my-net
     build:
       context: ../acmeair-flightservice-java/
-      dockerfile: Dockerfile-pm
+      dockerfile: Dockerfile-qn
     environment:
-      - MONGO_HOST=acmeair-flight-db
+      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://acmeair-flight-db:27017
     volumes_from:
       - acmeair-flight-db
     mem_limit: 1g

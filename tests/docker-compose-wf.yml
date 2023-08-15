@@ -1,0 +1,84 @@
+acmeair-booking-db:
+  container_name: acmeair-booking-db
+  image: mongo
+  net: ${NETWORK}
+
+acmeair-customer-db:
+  container_name: acmeair-customer-db
+  image: mongo
+  net: ${NETWORK}
+
+acmeair-flight-db:
+  container_name: acmeair-flight-db
+  image: mongo
+  net: ${NETWORK}
+
+acmeair-nginx1:
+  container_name: acmeair-nginx1
+  net: ${NETWORK}
+  restart: always
+  build: ./nginx/
+  ports:
+    - "80:80"
+  volumes:
+    - /www/public
+  volumes_from:
+    - acmeair-mainservice-java
+    - acmeair-authservice-java
+    - acmeair-bookingservice-java
+    - acmeair-customerservice-java
+    - acmeair-flightservice-java
+
+acmeair-mainservice-java:
+  container_name: acmeair-mainservice-java
+  dockerfile: Dockerfile-wf
+  net: ${NETWORK}
+  build: ../acmeair-mainservice-java/
+  environment:
+    - LICENSE=accept
+  mem_limit: 512m
+
+acmeair-authservice-java:
+  container_name: acmeair-authservice-java
+  dockerfile: Dockerfile-wf
+  net: ${NETWORK}
+  build: ../acmeair-authservice-java/
+  environment:
+    - LICENSE=accept
+  mem_limit: 512m
+
+acmeair-bookingservice-java:
+  container_name: acmeair-bookingservice-java
+  dockerfile: Dockerfile-wf
+  net: ${NETWORK}
+  build: ../acmeair-bookingservice-java/
+  environment:
+    - LICENSE=accept
+    - MONGO_HOST=acmeair-booking-db
+  volumes_from:
+    - acmeair-booking-db
+  mem_limit: 512m
+
+acmeair-customerservice-java:
+  container_name: acmeair-customerservice-java
+  dockerfile: Dockerfile-wf
+  net: ${NETWORK}
+  build: ../acmeair-customerservice-java/
+  environment:
+    - LICENSE=accept
+    - MONGO_HOST=acmeair-customer-db
+  volumes_from:
+    - acmeair-customer-db
+  mem_limit: 512m
+
+acmeair-flightservice-java:
+  container_name: acmeair-flightservice-java
+  dockerfile: Dockerfile-wf
+  net: ${NETWORK}
+  build: ../acmeair-flightservice-java/
+  environment:
+    - LICENSE=accept
+    - MONGO_HOST=acmeair-flight-db
+  volumes_from:
+    - acmeair-flight-db
+  mem_limit: 512m
