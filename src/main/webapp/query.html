@@ -37,8 +37,8 @@
 	dojo.require("dijit.form.DateTextBox");
 	dojo.require("dijit.form.FilteringSelect");
 	dojo.require("dijit.form.CheckBox");
-    dojo.require("dijit.Toolbar");
-    dojo.require("dijit.Declaration");
+        dojo.require("dijit.Toolbar");
+        dojo.require("dijit.Declaration");
 	
 	dojo.require("dojo.currency");
 	
@@ -238,6 +238,9 @@
 			content : xhrContent,
 			url: window.location.protocol+ '//' + window.location.host + '/booking/bookflights',
 			handleAs: "json",
+			headers: {
+                          "Authorization" : "Bearer " + dojo.cookie("Bearer")
+                        },
 			load : function(response, ioArgs) {
 				dojo.byId("bookingToFlight").innerHTML = response.departBookingId;
 				if (response.returnBookingId) {
