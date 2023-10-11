@@ -162,6 +162,9 @@
 				dojo.xhrPost({
 					content : xhrContent,
 					url : window.location.protocol+ '//' + window.location.host + '/booking/cancelbooking',
+					headers: {
+                                          "Authorization" : "Bearer " + dojo.cookie("Bearer")
+                                        },
 					load : function(response, ioArgs) {
 						alert("Booking Canceled.");
 						createAndStartGrid();

@@ -33,7 +33,7 @@ services:
       - "80:80"
     volumes:
       - /www/public
-    volumes_from:
+    depends_on:
       - acmeair-mainservice-java
       - acmeair-authservice-java
       - acmeair-bookingservice-java
@@ -49,7 +49,7 @@ services:
       dockerfile: Dockerfile-daily
     environment:
       - LICENSE=accept
-    mem_limit: 1g
+    mem_limit: 512m
 
   acmeair-authservice-java:
     container_name: acmeair-authservice-java
@@ -57,10 +57,15 @@ services:
       - my-net
     build:
       context: ../acmeair-authservice-java/
-      dockerfile: Dockerfile-qu
+      dockerfile: Dockerfile-daily-io
     environment:
       - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
     mem_limit: 1g
+    cap_add:
+      - CHECKPOINT_RESTORE
+      - SETPCAP
+    security_opt:
+      - seccomp:unconfined
 
   acmeair-bookingservice-java:
     container_name: acmeair-bookingservice-java
@@ -68,15 +73,20 @@ services:
       - my-net
     build:
       context: ../acmeair-bookingservice-java/
-      dockerfile: Dockerfile-qu
+      dockerfile: Dockerfile-daily-io
     environment:
-      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://acmeair-booking-db:27017
+      - MONGO_HOST=acmeair-booking-db
       - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
       - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
       - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
     volumes_from:
       - acmeair-booking-db
     mem_limit: 1g
+    cap_add:
+      - CHECKPOINT_RESTORE
+      - SETPCAP
+    security_opt:
+      - seccomp:unconfined  
 
   acmeair-customerservice-java:
     container_name: acmeair-customerservice-java
@@ -84,13 +94,18 @@ services:
       - my-net
     build:
       context: ../acmeair-customerservice-java/
-      dockerfile: Dockerfile-qu
+      dockerfile: Dockerfile-daily-io
     environment:
-      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://acmeair-customer-db:27017
+      - MONGO_HOST=acmeair-customer-db
       - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
     volumes_from:
       - acmeair-customer-db
     mem_limit: 1g
+    cap_add:
+      - CHECKPOINT_RESTORE
+      - SETPCAP
+    security_opt:
+      - seccomp:unconfined  
 
   acmeair-flightservice-java:
     container_name: acmeair-flightservice-java
@@ -98,12 +113,17 @@ services:
       - my-net
     build:
       context: ../acmeair-flightservice-java/
-      dockerfile: Dockerfile-qu
+      dockerfile: Dockerfile-daily-io
     environment:
-      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://acmeair-flight-db:27017
+      - MONGO_HOST=acmeair-flight-db
     volumes_from:
       - acmeair-flight-db
     mem_limit: 1g
+    cap_add:
+      - CHECKPOINT_RESTORE
+      - SETPCAP
+    security_opt:
+      - seccomp:unconfined  
 
 
 
