@@ -30,10 +30,10 @@ services:
     restart: always
     build: ./nginx/
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - /www/public
-    volumes_from:
+    depends_on::
       - acmeair-mainservice-java
       - acmeair-authservice-java
       - acmeair-bookingservice-java
@@ -74,7 +74,7 @@ services:
       - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
       - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
       - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
-    volumes_from:
+    depends_on:
       - acmeair-booking-db
     mem_limit: 1g
 
@@ -88,7 +88,7 @@ services:
     environment:
       - MONGO_HOST=acmeair-customer-db
       - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
-    volumes_from:
+    depends_on:
       - acmeair-customer-db
     mem_limit: 1g
 
@@ -101,7 +101,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - MONGO_HOST=acmeair-flight-db
-    volumes_from:
+    depends_on:
       - acmeair-flight-db
     mem_limit: 1g
 

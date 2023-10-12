@@ -211,6 +211,8 @@
 		
 		var toFlight = grid.store.getValue(grid.getItem(selectedIndexForToFlights), "_id");
 		var toFlightSegId = grid.store.getValue(grid.getItem(selectedIndexForToFlights), "flightSegmentId");
+		var toFlightMiles = grid.store.getValue(grid.getItem(selectedIndexForToFlights), "miles");
+		
 
 		var retFlight;
 		var retFlightSegId;
@@ -223,14 +225,17 @@
 			var grid = dijit.byId("gridReturn");
 			retFlight = grid.store.getValue(grid.getItem(selectedIndexForRetFlights), "_id");
 			retFlightSegId = grid.store.getValue(grid.getItem(selectedIndexForRetFlights), "flightSegmentId");
+			retFlightMiles = grid.store.getValue(grid.getItem(selectedIndexForRetFlights), "miles");
 		}
 		
 		var xhrContent = { userid : loggedinuser }
 		xhrContent.toFlightId = toFlight;
 		xhrContent.toFlightSegId = toFlightSegId;
+		xhrContent.toFlightMiles = toFlightMiles;
 		if (!oneWayFlight) {
 			xhrContent.retFlightId = retFlight;
 			xhrContent.retFlightSegId = retFlightSegId;
+			xhrContent.retFlightMiles = retFlightMiles;
 		}
 		xhrContent.oneWayFlight = oneWayFlight;
 		
