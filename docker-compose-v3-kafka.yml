@@ -1,8 +1,8 @@
 version: "3.9"
 
 networks:
-  my-net:
-    name: my-net
+  my-net2:
+    name: my-net2
 
 services:
   zookeeper:
@@ -11,50 +11,50 @@ services:
       - ZOOKEEPER_CLIENT_PORT=2181
       - ZOOKEEPER_TICK_TIME=2000
     networks:
-      - my-net
+      - my-net2
   kafka:
     image: confluentinc/cp-kafka:latest
     depends_on:
       - zookeeper
     environment:
-      - KAFKA_BROKER_ID=1
+      - KAFKA_BROKER_ID=2
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
       - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT
       - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
       - KAFKA_CREATE_TOPICS="rewards:1:1"
     networks:
-      - my-net
+      - my-net2
 
   acmeair-booking-db:
     container_name: acmeair-booking-db
     image: mongo
     networks: 
-      - my-net
+      - my-net2
 
   acmeair-customer-db:
     container_name: acmeair-customer-db
     image: mongo
     networks: 
-      - my-net
+      - my-net2
 
   acmeair-flight-db:
     container_name: acmeair-flight-db
     image: mongo
     networks: 
-      - my-net
+      - my-net2
 
   acmeair-nginx1:
     container_name: acmeair-nginx1
     networks: 
-      - my-net
+      - my-net2
     restart: always
     build: ./nginx/
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - /www/public
-    depends_on::
+    depends_on:
       - acmeair-mainservice-java
       - acmeair-authservice-java
       - acmeair-bookingservice-java
@@ -64,7 +64,7 @@ services:
   acmeair-mainservice-java:
     container_name: acmeair-mainservice-java
     networks: 
-      - my-net
+      - my-net2
     build: 
       context: ../acmeair-mainservice-java/
       dockerfile: Dockerfile
@@ -75,7 +75,7 @@ services:
   acmeair-authservice-java:
     container_name: acmeair-authservice-java
     networks: 
-      - my-net
+      - my-net2
     build:
       context: ../acmeair-authservice-java/
       dockerfile: Dockerfile
@@ -86,7 +86,7 @@ services:
   acmeair-bookingservice-java:
     container_name: acmeair-bookingservice-java
     networks: 
-      - my-net
+      - my-net2
     build:
       context: ../acmeair-bookingservice-java/
       dockerfile: Dockerfile
@@ -97,12 +97,13 @@ services:
       - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
     depends_on:
       - acmeair-booking-db
+      - kafka
     mem_limit: 1g
 
   acmeair-customerservice-java:
     container_name: acmeair-customerservice-java
     networks: 
-      - my-net
+      - my-net2
     build:
       context: ../acmeair-customerservice-java/
       dockerfile: Dockerfile
@@ -111,12 +112,13 @@ services:
       - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
     depends_on:
       - acmeair-customer-db
+      - kafka
     mem_limit: 1g
 
   acmeair-flightservice-java:
     container_name: acmeair-flightservice-java
     networks: 
-      - my-net
+      - my-net2
     build:
       context: ../acmeair-flightservice-java/
       dockerfile: Dockerfile
