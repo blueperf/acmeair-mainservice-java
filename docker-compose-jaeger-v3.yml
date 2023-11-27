@@ -17,19 +17,19 @@ services:
 
   acmeair-booking-db:
     container_name: acmeair-booking-db
-    image: mongo
+    image: docker.io/library/mongo:latest
     networks: 
       - my-net
 
   acmeair-customer-db:
     container_name: acmeair-customer-db
-    image: mongo
+    image: docker.io/library/mongo:latest
     networks: 
       - my-net
 
   acmeair-flight-db:
     container_name: acmeair-flight-db
-    image: mongo
+    image: docker.io/library/mongo:latest
     networks: 
       - my-net
 

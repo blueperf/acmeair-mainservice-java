@@ -232,7 +232,7 @@ spec:
         app: flight-db
     spec:
       containers:
-      - image: mongo
+      - image: docker.io/library/mongo:latest
         name: flight-db
         ports:
         - containerPort: 27017
@@ -278,7 +278,7 @@ spec:
         app: booking-db
     spec:
       containers:
-      - image: mongo
+      - image: docker.io/library/mongo:latest
         name: booking-db
         ports:
         - containerPort: 27017
@@ -324,7 +324,7 @@ spec:
         app: customer-db
     spec:
       containers:
-      - image: mongo
+      - image: docker.io/library/mongo:latest
         name: customer-db
         ports:
         - containerPort: 27017
