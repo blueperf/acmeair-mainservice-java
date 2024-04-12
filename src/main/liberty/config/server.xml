@@ -27,7 +27,7 @@
     messageSource="message,trace,accessLog,ffdc,audit" 
     traceSpecification="${TRACE_SPEC}" />
 
-  <webApplication name="acmeair-mainservice" location="acmeair-mainservice-java-6.1.war" contextRoot="/acmeair">
+  <webApplication name="acmeair-mainservice" location="acmeair-mainservice-java-7.0.war" contextRoot="/acmeair">
     <!-- enable visibility to third party apis -->
     <classloader apiTypeVisibility="api,ibm-api,spec,stable,third-party" />
   </webApplication>

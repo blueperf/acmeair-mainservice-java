@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>acmeair-authservice-java</groupId>
-  <version>6.1</version>
+  <version>7.0</version>
   <artifactId>acmeair-mainservice-java</artifactId>
   <name>acmeair-mainservice-java</name>
   <properties>
