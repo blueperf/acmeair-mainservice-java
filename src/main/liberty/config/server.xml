@@ -2,7 +2,7 @@
 <server>
   <!-- Enable features -->
   <featureManager>
-    <feature>microProfile-6.1</feature>
+    <feature>microProfile-7.0</feature>
   </featureManager>
 
   <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
@@ -17,8 +17,6 @@
       logFormat='%h %u %t "%r" %s %b %D %{User-agent}i'>
     </accessLogging>
   </httpEndpoint>
-
-  <quickStartSecurity userName="${env.USERNAME}" userPassword="${env.PASSWORD}" />
 
   <logging 
     consoleFormat="${LOGGING_FORMAT}" 
