@@ -51,9 +51,9 @@ services:
       - my-net
     build:
       context: ../acmeair-bookingservice-java/
-      dockerfile: Dockerfile-pm 
+      dockerfile: Dockerfile-pm
     environment:
-      - MONGO_HOST=192.168.90.157
+      - MONGO_HOST=10.16.112.86
       - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
       - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
     deploy:
@@ -70,7 +70,7 @@ services:
       context: ../acmeair-customerservice-java/
       dockerfile: Dockerfile-pm
     environment:
-      - MONGO_HOST=192.168.90.157
+      - MONGO_HOST=10.16.112.86
     deploy:
       resources:
         limits:
@@ -83,9 +83,9 @@ services:
       - my-net
     build:
       context: ../acmeair-flightservice-java/
-      dockerfile: Dockerfile-pm 
+      dockerfile: Dockerfile-pm
     environment:
-      - MONGO_HOST=192.168.90.157
+      - MONGO_HOST=10.16.112.86
     deploy:
       resources:
         limits:

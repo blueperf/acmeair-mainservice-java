@@ -53,7 +53,7 @@ services:
       context: ../acmeair-bookingservice-java/
       dockerfile: Dockerfile-qu
     environment:
-      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://192.168.90.157:27017
+      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://10.16.112.86:27017
       - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
       - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
       - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
@@ -71,7 +71,7 @@ services:
       context: ../acmeair-customerservice-java/
       dockerfile: Dockerfile-qu
     environment:
-      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://192.168.90.157:27017
+      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://10.16.112.86:27017
       - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
     deploy:
       resources:
@@ -87,7 +87,7 @@ services:
       context: ../acmeair-flightservice-java/
       dockerfile: Dockerfile-qu
     environment:
-      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://192.168.90.157:27017
+      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://10.16.112.86:27017
     deploy:
       resources:
         limits:
