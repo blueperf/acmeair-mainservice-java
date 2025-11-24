@@ -2,7 +2,7 @@
 <server>
   <!-- Enable features -->
   <featureManager>
-    <feature>microProfile-7.0</feature>
+    <feature>microProfile-7.1</feature>
   </featureManager>
 
   <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
@@ -25,9 +25,7 @@
     messageSource="message,trace,accessLog,ffdc,audit" 
     traceSpecification="${TRACE_SPEC}" />
 
-  <webApplication name="acmeair-mainservice" location="acmeair-mainservice-java-7.0.war" contextRoot="/acmeair">
-    <!-- enable visibility to third party apis -->
-    <classloader apiTypeVisibility="api,ibm-api,spec,stable,third-party" />
+  <webApplication name="acmeair-mainservice" location="acmeair-mainservice-java-7.1.war" contextRoot="/acmeair">
   </webApplication>
 
   <cors 
